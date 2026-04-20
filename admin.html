@@ -1,0 +1,983 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel — Wahinya Duncan Campaign</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --green: #1d9e75;
+        --green-dark: #0f6e56;
+        --green-light: #e1f5ee;
+        --navy: #0a2240;
+        --navy-mid: #185fa5;
+        --white: #fff;
+        --gray-100: #f7f8fa;
+        --gray-200: #eef0f3;
+        --text: #111827;
+        --text-muted: #6b7280;
+        --border: rgba(0, 0, 0, 0.08);
+        --radius: 12px;
+        --radius-sm: 8px;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background: var(--gray-100);
+        color: var(--text);
+        min-height: 100vh;
+      }
+
+      /* LOGIN */
+      .login-wrap {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+        padding: 24px;
+      }
+      .login-card {
+        background: var(--white);
+        border-radius: var(--radius);
+        padding: 40px 36px;
+        width: 100%;
+        max-width: 400px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+      }
+      .login-logo {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: var(--green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--white);
+        margin: 0 auto 20px;
+      }
+      .login-card h1 {
+        font-size: 22px;
+        font-weight: 800;
+        text-align: center;
+        margin-bottom: 6px;
+      }
+      .login-card p {
+        font-size: 14px;
+        color: var(--text-muted);
+        text-align: center;
+        margin-bottom: 28px;
+      }
+      .login-card input {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1.5px solid var(--gray-200);
+        border-radius: var(--radius-sm);
+        font-size: 15px;
+        outline: none;
+        margin-bottom: 14px;
+        transition: border-color 0.2s;
+      }
+      .login-card input:focus {
+        border-color: var(--green);
+      }
+      .login-card button {
+        width: 100%;
+        background: var(--green);
+        color: var(--white);
+        padding: 13px;
+        border: none;
+        border-radius: var(--radius-sm);
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .login-card button:hover {
+        background: var(--green-dark);
+      }
+      .login-error {
+        background: #fef2f2;
+        color: #b91c1c;
+        padding: 10px 14px;
+        border-radius: var(--radius-sm);
+        font-size: 13px;
+        margin-bottom: 14px;
+        display: none;
+      }
+
+      /* APP SHELL */
+      .app {
+        display: none;
+        min-height: 100vh;
+      }
+      header {
+        background: var(--navy);
+        padding: 14px 28px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .header-logo {
+        color: var(--white);
+        font-weight: 800;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .header-logo .logo-circle {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 800;
+        color: var(--white);
+      }
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .badge-admin {
+        background: var(--green);
+        color: var(--white);
+        font-size: 12px;
+        font-weight: 600;
+        padding: 4px 12px;
+        border-radius: 20px;
+      }
+      .btn-logout {
+        background: transparent;
+        color: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 6px 14px;
+        border-radius: var(--radius-sm);
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn-logout:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--white);
+      }
+
+      /* STATS ROW */
+      .stats-row {
+        background: var(--white);
+        border-bottom: 1px solid var(--border);
+        padding: 20px 28px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 16px;
+      }
+      .stat-box {
+        text-align: center;
+      }
+      .stat-box .num {
+        font-size: 28px;
+        font-weight: 800;
+        color: var(--navy);
+        line-height: 1;
+      }
+      .stat-box .lbl {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-top: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+      }
+      .stat-box.green .num {
+        color: var(--green);
+      }
+
+      /* FILTERS */
+      .filters {
+        background: var(--white);
+        border-bottom: 1px solid var(--border);
+        padding: 16px 28px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .filters input,
+      .filters select {
+        padding: 9px 13px;
+        border: 1.5px solid var(--gray-200);
+        border-radius: var(--radius-sm);
+        font-size: 14px;
+        outline: none;
+        transition: border-color 0.2s;
+        background: var(--white);
+      }
+      .filters input:focus,
+      .filters select:focus {
+        border-color: var(--green);
+      }
+      .filters input {
+        min-width: 220px;
+        flex: 1;
+      }
+      .btn-refresh {
+        background: var(--green);
+        color: var(--white);
+        padding: 9px 18px;
+        border: none;
+        border-radius: var(--radius-sm);
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+        white-space: nowrap;
+      }
+      .btn-refresh:hover {
+        background: var(--green-dark);
+      }
+      .btn-export {
+        background: var(--navy);
+        color: var(--white);
+        padding: 9px 18px;
+        border: none;
+        border-radius: var(--radius-sm);
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+        white-space: nowrap;
+      }
+      .btn-export:hover {
+        background: #0d2d4f;
+      }
+
+      /* TABLE */
+      .table-wrap {
+        padding: 24px 28px;
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--white);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+        min-width: 700px;
+      }
+      thead {
+        background: var(--navy);
+      }
+      thead th {
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        padding: 13px 16px;
+        text-align: left;
+        white-space: nowrap;
+      }
+      tbody tr {
+        border-bottom: 1px solid var(--border);
+        transition: background 0.15s;
+      }
+      tbody tr:last-child {
+        border-bottom: none;
+      }
+      tbody tr:hover {
+        background: var(--gray-100);
+      }
+      tbody td {
+        padding: 13px 16px;
+        font-size: 14px;
+        color: var(--text);
+        vertical-align: middle;
+      }
+      .td-name {
+        font-weight: 600;
+      }
+      .td-id {
+        font-family: monospace;
+        font-size: 13px;
+        color: var(--text-muted);
+      }
+      .ward-badge {
+        background: var(--green-light);
+        color: var(--green-dark);
+        font-size: 11px;
+        font-weight: 600;
+        padding: 3px 9px;
+        border-radius: 20px;
+        white-space: nowrap;
+      }
+      .thumb {
+        width: 48px;
+        height: 32px;
+        object-fit: cover;
+        border-radius: 4px;
+        cursor: pointer;
+        border: 1px solid var(--border);
+        transition: transform 0.2s;
+      }
+      .thumb:hover {
+        transform: scale(1.1);
+      }
+      .td-actions {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .btn-view {
+        background: var(--navy-mid);
+        color: var(--white);
+        border: none;
+        padding: 6px 14px;
+        border-radius: var(--radius-sm);
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+        white-space: nowrap;
+      }
+      .btn-view:hover {
+        background: var(--navy);
+      }
+      .btn-print {
+        background: var(--green);
+        color: var(--white);
+        border: none;
+        padding: 6px 14px;
+        border-radius: var(--radius-sm);
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+        white-space: nowrap;
+      }
+      .btn-print:hover {
+        background: var(--green-dark);
+      }
+      .btn-del {
+        background: #fef2f2;
+        color: #b91c1c;
+        border: 1px solid #fecaca;
+        padding: 6px 10px;
+        border-radius: var(--radius-sm);
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .btn-del:hover {
+        background: #fee2e2;
+      }
+      .empty-row td {
+        text-align: center;
+        padding: 48px;
+        color: var(--text-muted);
+        font-size: 15px;
+      }
+
+      /* MODAL */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 200;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .modal-overlay.open {
+        display: flex;
+      }
+      .modal {
+        background: var(--white);
+        border-radius: var(--radius);
+        width: 100%;
+        max-width: 680px;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      .modal-header {
+        padding: 20px 24px 16px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .modal-header h2 {
+        font-size: 18px;
+        font-weight: 800;
+      }
+      .modal-close {
+        background: var(--gray-200);
+        border: none;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        font-size: 16px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .modal-close:hover {
+        background: var(--gray-200);
+      }
+      .modal-body {
+        padding: 24px;
+      }
+      .detail-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+      .detail-item label {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        display: block;
+        margin-bottom: 4px;
+      }
+      .detail-item span {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--text);
+      }
+      .id-images {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+      .id-img-box label {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-muted);
+        display: block;
+        margin-bottom: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+      }
+      .id-img-box img {
+        width: 100%;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border);
+        object-fit: contain;
+        background: var(--gray-100);
+        max-height: 180px;
+      }
+      .modal-footer {
+        padding: 16px 24px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+      }
+      .btn-modal-print {
+        background: var(--green);
+        color: var(--white);
+        border: none;
+        padding: 10px 24px;
+        border-radius: var(--radius-sm);
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .btn-modal-close {
+        background: var(--gray-200);
+        color: var(--text);
+        border: none;
+        padding: 10px 20px;
+        border-radius: var(--radius-sm);
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      /* LOADING */
+      .loading {
+        text-align: center;
+        padding: 60px;
+        color: var(--text-muted);
+        font-size: 15px;
+      }
+      .spinner {
+        width: 32px;
+        height: 32px;
+        border: 3px solid var(--gray-200);
+        border-top-color: var(--green);
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+        margin: 0 auto 14px;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* PRINT STYLES */
+      @media print {
+        @page {
+          size: A4 portrait;
+          margin: 0;
+        }
+        body * {
+          visibility: hidden;
+        }
+        #print-area,
+        #print-area * {
+          visibility: visible;
+        }
+        #print-area {
+          position: fixed;
+          inset: 0;
+          background: white;
+          width: 210mm;
+          height: 297mm;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 8mm;
+          padding: 12mm;
+          page-break-inside: avoid;
+        }
+        .print-img-box {
+          width: 100%;
+          height: 126mm;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .print-img-box img {
+          max-width: 100%;
+          max-height: 126mm;
+          width: auto;
+          height: auto;
+          object-fit: contain;
+          border: 0.5px solid #ccc;
+          border-radius: 4px;
+          display: block;
+        }
+        .print-divider {
+          width: 50%;
+          height: 0.5px;
+          background: #ddd;
+          flex-shrink: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- LOGIN SCREEN -->
+    <div class="login-wrap" id="loginScreen">
+      <div class="login-card">
+        <div class="login-logo">WD</div>
+        <h1>Admin Panel</h1>
+        <p>Wahinya Duncan Waweru Campaign</p>
+        <div class="login-error" id="loginError">
+          Incorrect password. Please try again.
+        </div>
+        <input
+          type="password"
+          id="passwordInput"
+          placeholder="Enter admin password"
+          onkeypress="if (event.key === 'Enter') login();"
+        />
+        <button onclick="login()">Sign In →</button>
+      </div>
+    </div>
+
+    <!-- ADMIN APP -->
+    <div class="app" id="appShell">
+      <header>
+        <div class="header-logo">
+          <div class="logo-circle">WD</div>
+          <span>Wahinya Duncan — Admin Panel</span>
+        </div>
+        <div class="header-right">
+          <span class="badge-admin">Admin</span>
+          <button class="btn-logout" onclick="logout()">Logout</button>
+        </div>
+      </header>
+
+      <div class="stats-row" id="statsRow">
+        <div class="stat-box green">
+          <div class="num" id="st-total">—</div>
+          <div class="lbl">Total Supporters</div>
+        </div>
+        <div class="stat-box">
+          <div class="num" id="st-riruta">—</div>
+          <div class="lbl">Riruta</div>
+        </div>
+        <div class="stat-box">
+          <div class="num" id="st-waithaka">—</div>
+          <div class="lbl">Waithaka</div>
+        </div>
+        <div class="stat-box">
+          <div class="num" id="st-uthiru">—</div>
+          <div class="lbl">Uthiru/Ruthimitu</div>
+        </div>
+        <div class="stat-box">
+          <div class="num" id="st-mutuini">—</div>
+          <div class="lbl">Mutuini</div>
+        </div>
+        <div class="stat-box">
+          <div class="num" id="st-ngando">—</div>
+          <div class="lbl">Ngando</div>
+        </div>
+      </div>
+
+      <div class="filters">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search by name, phone, or ID number..."
+          oninput="applyFilters()"
+        />
+        <select id="wardFilter" onchange="applyFilters()">
+          <option value="">All Wards</option>
+          <option value="Riruta">Riruta</option>
+          <option value="Waithaka">Waithaka</option>
+          <option value="UthiruRuthimitu">Uthiru / Ruthimitu</option>
+          <option value="Mutuini">Mutuini</option>
+          <option value="Ngando">Ngando</option>
+        </select>
+        <button class="btn-refresh" onclick="loadData()">↻ Refresh</button>
+        <button class="btn-export" onclick="exportCSV()">↓ Export CSV</button>
+      </div>
+
+      <div class="table-wrap">
+        <div class="loading" id="loadingState">
+          <div class="spinner"></div>
+          Loading supporters...
+        </div>
+        <table id="dataTable" style="display: none">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Full Name</th>
+              <th>ID Number</th>
+              <th>Phone</th>
+              <th>Ward</th>
+              <th>Front ID</th>
+              <th>Back ID</th>
+              <th>Registered</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- DETAIL / PRINT MODAL -->
+    <div
+      class="modal-overlay"
+      id="modalOverlay"
+      onclick="if (event.target === this) closeModal();"
+    >
+      <div class="modal">
+        <div class="modal-header">
+          <h2 id="modalTitle">Supporter Details</h2>
+          <button class="modal-close" onclick="closeModal()">✕</button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-footer">
+          <button class="btn-modal-print" onclick="printRecord()">
+            🖨 Print A4
+          </button>
+          <button class="btn-modal-close" onclick="closeModal()">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- HIDDEN PRINT AREA -->
+    <div id="print-area" style="display: none"></div>
+
+    <script>
+      const SUPABASE_URL = "https://udmqdtminnfcjclvlxub.supabase.co";
+      const SUPABASE_ANON_KEY =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVkbXFkdG1pbm5mY2pjbHZseHViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NzI4MzAsImV4cCI6MjA5MDE0ODgzMH0.tFSld83r8vrkErZ3ZnVbtgOYnMDeckhZfFOmvLSoIFI";
+      const ADMIN_HASH =
+        "d143e4011dadc35ab428c35986d224dc0169f29f373fa90e922c752b4a6b58ba";
+      const { createClient } = supabase;
+      const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      let allRecords = [];
+      let currentRecord = null;
+
+      // ── AUTH ──
+      async function login() {
+        const pwd = document.getElementById("passwordInput").value;
+        const buf = await crypto.subtle.digest(
+          "SHA-256",
+          new TextEncoder().encode(pwd),
+        );
+        const hash = Array.from(new Uint8Array(buf))
+          .map((b) => b.toString(16).padStart(2, "0"))
+          .join("");
+        if (hash === ADMIN_HASH) {
+          sessionStorage.setItem("adminAuth", "true");
+          document.getElementById("loginScreen").style.display = "none";
+          document.getElementById("appShell").style.display = "block";
+          loadData();
+        } else {
+          document.getElementById("loginError").style.display = "block";
+          document.getElementById("passwordInput").value = "";
+        }
+      }
+
+      function logout() {
+        sessionStorage.removeItem("adminAuth");
+        location.reload();
+      }
+
+      // Check if already logged in
+      if (sessionStorage.getItem("adminAuth") === "true") {
+        document.getElementById("loginScreen").style.display = "none";
+        document.getElementById("appShell").style.display = "block";
+      }
+
+      // ── DATA ──
+      async function loadData() {
+        document.getElementById("loadingState").style.display = "block";
+        document.getElementById("dataTable").style.display = "none";
+
+        const { data, error } = await sb
+          .from("national_ids")
+          .select("*")
+          .order("created_at", { ascending: false });
+        if (error) {
+          alert("Error loading data: " + error.message);
+          return;
+        }
+
+        allRecords = (data || []).map((r) => ({
+          ...r,
+          front_url: r.front_image_path
+            ? sb.storage.from("id_images").getPublicUrl(r.front_image_path).data
+                .publicUrl
+            : null,
+          back_url: r.back_image_path
+            ? sb.storage.from("id_images").getPublicUrl(r.back_image_path).data
+                .publicUrl
+            : null,
+        }));
+
+        updateStats();
+        applyFilters();
+        document.getElementById("loadingState").style.display = "none";
+        document.getElementById("dataTable").style.display = "table";
+      }
+
+      function updateStats() {
+        const wardCount = (w) => allRecords.filter((r) => r.ward === w).length;
+        document.getElementById("st-total").textContent = allRecords.length;
+        document.getElementById("st-riruta").textContent = wardCount("Riruta");
+        document.getElementById("st-waithaka").textContent =
+          wardCount("Waithaka");
+        document.getElementById("st-uthiru").textContent =
+          wardCount("UthiruRuthimitu");
+        document.getElementById("st-mutuini").textContent =
+          wardCount("Mutuini");
+        document.getElementById("st-ngando").textContent = wardCount("Ngando");
+      }
+
+      function applyFilters() {
+        const q = document.getElementById("searchInput").value.toLowerCase();
+        const ward = document.getElementById("wardFilter").value;
+        const filtered = allRecords.filter((r) => {
+          const matchSearch =
+            !q ||
+            (r.uploader_name || "").toLowerCase().includes(q) ||
+            (r.phone_number || "").includes(q) ||
+            (r.name || "").toLowerCase().includes(q);
+          const matchWard = !ward || r.ward === ward;
+          return matchSearch && matchWard;
+        });
+        renderTable(filtered);
+      }
+
+      function renderTable(records) {
+        const tbody = document.getElementById("tableBody");
+        if (records.length === 0) {
+          tbody.innerHTML =
+            '<tr class="empty-row"><td colspan="9">No supporters found matching your search.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = records
+          .map(
+            (r, i) => `
+          <tr>
+            <td style="color:var(--text-muted);font-size:13px">${i + 1}</td>
+            <td class="td-name">${esc(r.uploader_name || "—")}</td>
+            <td class="td-id">${esc(r.name || "—")}</td>
+            <td>${esc(r.phone_number || "—")}</td>
+            <td><span class="ward-badge">${esc(wardLabel(r.ward))}</span></td>
+            <td>${r.front_url ? `<img src="${r.front_url}" class="thumb" onclick="openModal('${r.id}')" title="Click to enlarge" />` : '<span style="color:var(--text-muted);font-size:12px">None</span>'}</td>
+            <td>${r.back_url ? `<img src="${r.back_url}" class="thumb" onclick="openModal('${r.id}')" title="Click to enlarge" />` : '<span style="color:var(--text-muted);font-size:12px">None</span>'}</td>
+            <td style="font-size:13px;color:var(--text-muted);white-space:nowrap">${formatDate(r.created_at)}</td>
+            <td>
+              <div class="td-actions">
+                <button class="btn-view" onclick="openModal('${r.id}')">View</button>
+                <button class="btn-print" onclick="openModal('${r.id}', true)">Print</button>
+                <button class="btn-del" onclick="deleteRecord('${r.id}', '${esc(r.uploader_name)}')">✕</button>
+              </div>
+            </td>
+          </tr>
+        `,
+          )
+          .join("");
+      }
+
+      // ── MODAL ──
+      function openModal(id, autoPrint = false) {
+        const r = allRecords.find((x) => x.id === id);
+        if (!r) return;
+        currentRecord = r;
+
+        document.getElementById("modalTitle").textContent =
+          r.uploader_name || "Supporter Details";
+        document.getElementById("modalBody").innerHTML = `
+          <div class="detail-grid">
+            <div class="detail-item"><label>Full Name</label><span>${esc(r.uploader_name || "—")}</span></div>
+            <div class="detail-item"><label>ID Number</label><span>${esc(r.name || "—")}</span></div>
+            <div class="detail-item"><label>Phone</label><span>${esc(r.phone_number || "—")}</span></div>
+            <div class="detail-item"><label>Ward</label><span>${esc(wardLabel(r.ward))}</span></div>
+            <div class="detail-item"><label>Registered</label><span>${formatDate(r.created_at)}</span></div>
+          </div>
+          <div class="id-images">
+            ${r.front_url ? `<div class="id-img-box"><label>Front of ID</label><img src="${r.front_url}" alt="ID Front" /></div>` : ""}
+            ${r.back_url ? `<div class="id-img-box"><label>Back of ID</label><img src="${r.back_url}" alt="ID Back" /></div>` : ""}
+          </div>
+        `;
+        document.getElementById("modalOverlay").classList.add("open");
+        if (autoPrint) setTimeout(printRecord, 400);
+      }
+
+      function closeModal() {
+        document.getElementById("modalOverlay").classList.remove("open");
+        currentRecord = null;
+      }
+
+      function printRecord() {
+        const r = currentRecord;
+        if (!r) return;
+        const printArea = document.getElementById("print-area");
+        printArea.style.display = "block";
+        printArea.innerHTML = `
+          ${r.front_url ? `<div class="print-img-box"><label>Front of National ID</label><img src="${r.front_url}" /></div>` : ""}
+          ${r.front_url && r.back_url ? `<div class="print-divider"></div>` : ""}
+          ${r.back_url ? `<div class="print-img-box"><label>Back of National ID</label><img src="${r.back_url}" /></div>` : ""}
+        `;
+        window.print();
+        setTimeout(() => {
+          printArea.style.display = "none";
+        }, 1000);
+      }
+
+      // ── DELETE ──
+      async function deleteRecord(id, name) {
+        if (
+          !confirm(`Delete registration for "${name}"? This cannot be undone.`)
+        )
+          return;
+        const r = allRecords.find((x) => x.id === id);
+        try {
+          const files = [r.front_image_path, r.back_image_path].filter(Boolean);
+          if (files.length) await sb.storage.from("id_images").remove(files);
+          const { error } = await sb.from("national_ids").delete().eq("id", id);
+          if (error) throw error;
+          allRecords = allRecords.filter((x) => x.id !== id);
+          updateStats();
+          applyFilters();
+        } catch (e) {
+          alert("Error deleting: " + e.message);
+        }
+      }
+
+      // ── EXPORT CSV ──
+      function exportCSV() {
+        const rows = [
+          ["#", "Full Name", "ID Number", "Phone", "Ward", "Registered"],
+        ];
+        allRecords.forEach((r, i) => {
+          rows.push([
+            i + 1,
+            r.uploader_name || "",
+            r.name || "",
+            r.phone_number || "",
+            wardLabel(r.ward),
+            formatDate(r.created_at),
+          ]);
+        });
+        const csv = rows
+          .map((r) =>
+            r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(","),
+          )
+          .join("\n");
+        const blob = new Blob([csv], { type: "text/csv" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = `supporters_${new Date().toISOString().slice(0, 10)}.csv`;
+        a.click();
+      }
+
+      // ── HELPERS ──
+      function esc(str) {
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+      function wardLabel(w) {
+        const map = {
+          Riruta: "Riruta",
+          Waithaka: "Waithaka",
+          UthiruRuthimitu: "Uthiru/Ruthimitu",
+          Mutuini: "Mutuini",
+          Ngando: "Ngando",
+        };
+        return map[w] || w || "—";
+      }
+      function formatDate(d) {
+        return d
+          ? new Date(d).toLocaleDateString("en-GB", {
+              day: "2-digit",
+              month: "short",
+              year: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+            })
+          : "—";
+      }
+
+      // Load data if already authenticated
+      if (sessionStorage.getItem("adminAuth") === "true") loadData();
+    </script>
+  </body>
+</html>
