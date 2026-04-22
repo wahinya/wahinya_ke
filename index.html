@@ -227,11 +227,14 @@
         transform: translateY(-1px);
       }
 
+      /* COUNT + ABOUT ROW */
       .count-about-row {
         display: grid;
         grid-template-columns: 1fr 1fr;
         min-height: 620px;
       }
+
+      /* ABOUT LEFT */
       .about-side {
         display: grid;
         grid-template-columns: 1fr 1.2fr;
@@ -242,55 +245,134 @@
         order: 1;
         border-right: 1px solid var(--border);
       }
-      .about-photo-wrap {
+
+      /* PHOTO SLIDER */
+      .photo-slider-wrap {
         display: flex;
         flex-direction: column;
         gap: 10px;
       }
-      .about-photo-img {
-        width: 100%;
-        height: 380px;
-        object-fit: cover;
-        object-position: top center;
+      .photo-slider {
+        position: relative;
         border-radius: 16px;
-        display: block;
+        overflow: hidden;
+        height: 380px;
+        background: linear-gradient(135deg, var(--navy-mid), var(--green));
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
       }
-      .about-photo {
-        background: linear-gradient(135deg, var(--navy-mid), var(--green));
-        border-radius: 16px;
-        height: 380px;
+      .slider-track {
+        display: flex;
+        height: 100%;
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .slide {
+        min-width: 100%;
+        height: 100%;
+        position: relative;
+        flex-shrink: 0;
+      }
+      .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+        display: block;
+      }
+      .slide-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+        padding: 20px 16px 14px;
+      }
+      .slide-caption p {
+        color: #fff;
+        font-size: 13px;
+        font-weight: 500;
+      }
+      .slide-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 13px;
+      }
+      .slide-placeholder svg {
+        width: 36px;
+        height: 36px;
+        stroke: rgba(255, 255, 255, 0.4);
+        fill: none;
+        stroke-width: 1.5;
+      }
+
+      /* Slider Controls */
+      .slider-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
         display: flex;
         align-items: center;
         justify-content: center;
-        position: relative;
-        overflow: hidden;
+        cursor: pointer;
+        z-index: 10;
+        transition:
+          background 0.2s,
+          transform 0.2s;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
       }
-      .about-photo-initials {
-        font-size: 80px;
-        font-weight: 800;
-        color: rgba(255, 255, 255, 0.15);
-        user-select: none;
+      .slider-btn:hover {
+        background: #fff;
+        transform: translateY(-50%) scale(1.05);
       }
-      .about-photo-tag {
-        position: absolute;
-        bottom: 16px;
-        left: 16px;
-        right: 16px;
-        background: rgba(0, 0, 0, 0.45);
-        border-radius: var(--radius-sm);
-        padding: 12px 14px;
+      .slider-btn svg {
+        width: 16px;
+        height: 16px;
+        stroke: var(--navy);
+        fill: none;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
       }
-      .about-photo-tag h3 {
-        color: var(--white);
-        font-size: 14px;
-        font-weight: 700;
+      .slider-btn.prev {
+        left: 10px;
       }
-      .about-photo-tag p {
-        color: rgba(255, 255, 255, 0.75);
-        font-size: 11px;
-        margin-top: 2px;
+      .slider-btn.next {
+        right: 10px;
       }
+      .slider-dots {
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        padding: 8px 0 2px;
+      }
+      .slider-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--gray-200);
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        transition:
+          background 0.2s,
+          width 0.2s;
+      }
+      .slider-dot.active {
+        background: var(--green);
+        width: 22px;
+        border-radius: 4px;
+      }
+
       .candidate-name {
         font-size: 18px;
         font-weight: 800;
@@ -365,6 +447,7 @@
         line-height: 1.6;
       }
 
+      /* COUNT RIGHT */
       .count-section {
         background: var(--gray-100);
         padding: 60px 40px;
@@ -580,7 +663,6 @@
         font-weight: 500;
       }
 
-      /* REGISTER */
       .register-section {
         background: var(--gray-100);
         padding: 72px 24px;
@@ -632,7 +714,6 @@
         border-color: var(--green);
       }
 
-      /* ID CAPTURE WIDGET */
       .id-capture {
         border: 1.5px solid var(--gray-200);
         border-radius: var(--radius-sm);
@@ -729,7 +810,6 @@
         stroke-width: 1.5;
       }
 
-      /* CAMERA MODAL */
       .camera-modal {
         display: none;
         position: fixed;
@@ -993,9 +1073,8 @@
           border-right: none;
           border-bottom: 1px solid var(--border);
         }
-        .about-photo,
-        .about-photo-img {
-          height: 280px;
+        .photo-slider {
+          height: 260px;
         }
         .count-section {
           order: 2;
@@ -1073,26 +1152,100 @@
     <div class="count-about-row">
       <!-- About — LEFT -->
       <div class="about-side" id="about">
-        <div class="about-photo-wrap">
-          <img
-            src="photo.jpg"
-            class="about-photo-img"
-            alt="Wahinya Duncan Waweru"
-            onerror="
-              this.style.display = 'none';
-              document.getElementById('photo-fallback').style.display = 'flex';
-            "
-          />
-          <div class="about-photo" id="photo-fallback" style="display: none">
-            <div class="about-photo-initials">WD</div>
-            <div class="about-photo-tag">
-              <h3>Wahinya Duncan Waweru</h3>
-              <p>Dagoretti South Constituency Candidate — 2027</p>
+        <div class="photo-slider-wrap">
+          <!-- PHOTO SLIDER -->
+          <!-- To add photos: upload photo1.jpg, photo2.jpg, photo3.jpg etc to GitHub alongside index.html -->
+          <div class="photo-slider">
+            <div class="slider-track" id="sliderTrack">
+              <!-- SLIDE 1 — replace src with your photo filenames -->
+              <div class="slide">
+                <img
+                  src="photo.jpg"
+                  alt="Wahinya Duncan Waweru"
+                  onerror="
+                    this.parentElement.innerHTML =
+                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Wahinya Duncan Waweru</span></div>'
+                  "
+                />
+                <div class="slide-caption">
+                  <p>Wahinya Duncan Waweru — Dagoretti South MP in Waiting</p>
+                </div>
+              </div>
+
+              <!-- SLIDE 2 -->
+              <div class="slide">
+                <img
+                  src="photo2.jpg"
+                  alt="On the ground"
+                  onerror="
+                    this.parentElement.innerHTML =
+                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Add photo2.jpg to your repo</span></div>'
+                  "
+                />
+                <div class="slide-caption">
+                  <p>On the ground with the people of Dagoretti South</p>
+                </div>
+              </div>
+
+              <!-- SLIDE 3 -->
+              <div class="slide">
+                <img
+                  src="photo3.jpg"
+                  alt="Community meeting"
+                  onerror="
+                    this.parentElement.innerHTML =
+                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Add photo3.jpg to your repo</span></div>'
+                  "
+                />
+                <div class="slide-caption">
+                  <p>Community meetings across all five wards</p>
+                </div>
+              </div>
+
+              <!-- SLIDE 4 -->
+              <div class="slide">
+                <img
+                  src="photo4.jpg"
+                  alt="Campaign rally"
+                  onerror="
+                    this.parentElement.innerHTML =
+                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Add photo4.jpg to your repo</span></div>'
+                  "
+                />
+                <div class="slide-caption">
+                  <p>Building a great generation together</p>
+                </div>
+              </div>
             </div>
+
+            <!-- Prev / Next buttons -->
+            <button
+              class="slider-btn prev"
+              onclick="slideMove(-1)"
+              aria-label="Previous"
+            >
+              <svg viewBox="0 0 24 24">
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+            </button>
+            <button
+              class="slider-btn next"
+              onclick="slideMove(1)"
+              aria-label="Next"
+            >
+              <svg viewBox="0 0 24 24">
+                <polyline points="9 6 15 12 9 18" />
+              </svg>
+            </button>
           </div>
+
+          <!-- Dots -->
+          <div class="slider-dots" id="sliderDots"></div>
+
           <p class="candidate-name">Wahinya Duncan Waweru</p>
           <p class="candidate-title">Dagoretti South MP in Waiting</p>
         </div>
+
         <div class="about-content">
           <div class="section-label">About the Candidate</div>
           <h2 class="section-title">
@@ -1366,11 +1519,9 @@
                 <option value="Ngando">Ngando</option>
               </select>
             </div>
-
-            <!-- ID FRONT -->
             <div class="form-group">
               <label>ID Front Side <span>*</span></label>
-              <div class="id-capture" id="front-capture">
+              <div class="id-capture">
                 <div class="id-capture-btns">
                   <label class="id-capture-btn">
                     <svg viewBox="0 0 24 24">
@@ -1419,11 +1570,9 @@
                 </div>
               </div>
             </div>
-
-            <!-- ID BACK -->
             <div class="form-group">
               <label>ID Back Side <span>*</span></label>
-              <div class="id-capture" id="back-capture">
+              <div class="id-capture">
                 <div class="id-capture-btns">
                   <label class="id-capture-btn">
                     <svg viewBox="0 0 24 24">
@@ -1473,7 +1622,6 @@
               </div>
             </div>
           </div>
-
           <div class="form-submit">
             <button id="reg-btn" onclick="submitRegistration()">
               Complete Registration →
@@ -1608,13 +1756,56 @@
       const { createClient } = supabase;
       const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-      // Image data store
-      const imgData = { front: null, back: null };
+      // ── PHOTO SLIDER ──
+      let slideIndex = 0;
+      let slideTimer;
+      const totalSlides = document.querySelectorAll(".slide").length;
+      const track = document.getElementById("sliderTrack");
+      const dotsContainer = document.getElementById("sliderDots");
 
-      // Camera state
-      let camStream = null;
-      let camSide = null;
+      // Build dots
+      for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement("button");
+        dot.className = "slider-dot" + (i === 0 ? " active" : "");
+        dot.setAttribute("aria-label", `Slide ${i + 1}`);
+        dot.onclick = () => goToSlide(i);
+        dotsContainer.appendChild(dot);
+      }
 
+      function goToSlide(n) {
+        slideIndex = (n + totalSlides) % totalSlides;
+        track.style.transform = `translateX(-${slideIndex * 100}%)`;
+        document.querySelectorAll(".slider-dot").forEach((d, i) => {
+          d.classList.toggle("active", i === slideIndex);
+        });
+        resetTimer();
+      }
+
+      function slideMove(dir) {
+        goToSlide(slideIndex + dir);
+      }
+
+      function resetTimer() {
+        clearInterval(slideTimer);
+        slideTimer = setInterval(() => slideMove(1), 4000);
+      }
+
+      resetTimer();
+
+      // Touch swipe support
+      let touchStartX = 0;
+      const slider = document.querySelector(".photo-slider");
+      slider.addEventListener(
+        "touchstart",
+        (e) => (touchStartX = e.touches[0].clientX),
+        { passive: true },
+      );
+      slider.addEventListener("touchend", (e) => {
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) slideMove(diff > 0 ? 1 : -1);
+      });
+
+      // ── NAV ──
       function toggleMenu() {
         document.getElementById("mobileMenu").classList.toggle("open");
       }
@@ -1623,7 +1814,11 @@
           document.getElementById("mobileMenu").classList.remove("open");
       });
 
-      // ── FILE UPLOAD ──
+      // ── ID CAPTURE ──
+      const imgData = { front: null, back: null };
+      let camStream = null,
+        camSide = null;
+
       function handleFileSelect(input, side) {
         const file = input.files[0];
         if (!file) return;
@@ -1632,7 +1827,6 @@
         reader.readAsDataURL(file);
       }
 
-      // ── CAMERA ──
       async function openCamera(side) {
         camSide = side;
         document.getElementById("camera-title").textContent =
@@ -1658,8 +1852,7 @@
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         canvas.getContext("2d").drawImage(video, 0, 0);
-        const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
-        setPreview(camSide, dataUrl);
+        setPreview(camSide, canvas.toDataURL("image/jpeg", 0.85));
         closeCamera();
       }
 
@@ -1673,27 +1866,29 @@
         camSide = null;
       }
 
-      // ── PREVIEW MANAGEMENT ──
       function setPreview(side, dataUrl) {
         imgData[side] = dataUrl;
-        const preview = document.getElementById(`${side}-preview`);
-        const wrap = document.getElementById(`${side}-preview-wrap`);
-        const placeholder = document.getElementById(`${side}-placeholder`);
-        preview.src = dataUrl;
-        wrap.classList.add("has-image");
-        placeholder.style.display = "none";
+        document.getElementById(`${side}-preview`).src = dataUrl;
+        document
+          .getElementById(`${side}-preview-wrap`)
+          .classList.add("has-image");
+        document.getElementById(`${side}-placeholder`).style.display = "none";
       }
 
       function removeImage(side) {
         imgData[side] = null;
-        const wrap = document.getElementById(`${side}-preview-wrap`);
-        const placeholder = document.getElementById(`${side}-placeholder`);
-        wrap.classList.remove("has-image");
-        placeholder.style.display = "flex";
+        document
+          .getElementById(`${side}-preview-wrap`)
+          .classList.remove("has-image");
+        document.getElementById(`${side}-placeholder`).style.display = "flex";
         document.getElementById(`${side}-file`).value = "";
       }
 
-      // ── UPLOAD TO SUPABASE ──
+      document.getElementById("cameraModal").addEventListener("click", (e) => {
+        if (e.target === document.getElementById("cameraModal")) closeCamera();
+      });
+
+      // ── UPLOAD & SUBMIT ──
       function base64ToBlob(base64, type = "image/jpeg") {
         const bytes = atob(base64.split(",")[1]);
         const arr = new Uint8Array(bytes.length);
@@ -1711,7 +1906,6 @@
         return data.path;
       }
 
-      // ── SUBMIT ──
       async function submitRegistration() {
         const name = document.getElementById("reg-name").value.trim();
         const phone = document.getElementById("reg-phone").value.trim();
@@ -1806,18 +2000,12 @@
             if (current >= total) clearInterval(timer);
           }, 16);
         } catch (e) {
-          console.error("Count error:", e);
           document.getElementById("count-display").textContent = "—";
           document.getElementById("supporter-count").textContent = "—";
         }
       }
 
       window.addEventListener("load", loadSupporterCount);
-
-      // Close camera modal on backdrop click
-      document.getElementById("cameraModal").addEventListener("click", (e) => {
-        if (e.target === document.getElementById("cameraModal")) closeCamera();
-      });
     </script>
   </body>
 </html>
