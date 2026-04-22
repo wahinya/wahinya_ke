@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Panel — Wahinya Duncan Campaign</title>
+    <title>Wahinya Duncan Waweru — Dagoretti South 2027</title>
+    <meta
+      name="description"
+      content="Wahinya Duncan Waweru — Dagoretti South Constituency candidate committed to education, economic empowerment, healthcare, infrastructure, and good governance."
+    />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
       *,
@@ -17,967 +21,1997 @@
         --green: #1d9e75;
         --green-dark: #0f6e56;
         --green-light: #e1f5ee;
+        --green-mid: #5dcaa5;
         --navy: #0a2240;
         --navy-mid: #185fa5;
-        --white: #fff;
+        --white: #ffffff;
         --gray-100: #f7f8fa;
         --gray-200: #eef0f3;
+        --gray-400: #9ca3af;
+        --gray-600: #4b5563;
+        --gray-900: #111827;
         --text: #111827;
         --text-muted: #6b7280;
         --border: rgba(0, 0, 0, 0.08);
         --radius: 12px;
         --radius-sm: 8px;
       }
+      html {
+        scroll-behavior: smooth;
+      }
       body {
         font-family:
           -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        background: var(--gray-100);
         color: var(--text);
-        min-height: 100vh;
-      }
-
-      /* LOGIN */
-      .login-wrap {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(135deg, var(--navy), var(--navy-mid));
-        padding: 24px;
-      }
-      .login-card {
         background: var(--white);
-        border-radius: var(--radius);
-        padding: 40px 36px;
-        width: 100%;
-        max-width: 400px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-      }
-      .login-logo {
-        width: 56px;
-        height: 56px;
-        border-radius: 50%;
-        background: var(--green);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        font-weight: 800;
-        color: var(--white);
-        margin: 0 auto 20px;
-      }
-      .login-card h1 {
-        font-size: 22px;
-        font-weight: 800;
-        text-align: center;
-        margin-bottom: 6px;
-      }
-      .login-card p {
-        font-size: 14px;
-        color: var(--text-muted);
-        text-align: center;
-        margin-bottom: 28px;
-      }
-      .login-card input {
-        width: 100%;
-        padding: 12px 14px;
-        border: 1.5px solid var(--gray-200);
-        border-radius: var(--radius-sm);
-        font-size: 15px;
-        outline: none;
-        margin-bottom: 14px;
-        transition: border-color 0.2s;
-      }
-      .login-card input:focus {
-        border-color: var(--green);
-      }
-      .login-card button {
-        width: 100%;
-        background: var(--green);
-        color: var(--white);
-        padding: 13px;
-        border: none;
-        border-radius: var(--radius-sm);
-        font-size: 15px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: background 0.2s;
-      }
-      .login-card button:hover {
-        background: var(--green-dark);
-      }
-      .login-error {
-        background: #fef2f2;
-        color: #b91c1c;
-        padding: 10px 14px;
-        border-radius: var(--radius-sm);
-        font-size: 13px;
-        margin-bottom: 14px;
-        display: none;
+        line-height: 1.6;
       }
 
-      /* APP SHELL */
-      .app {
-        display: none;
-        min-height: 100vh;
-      }
-      header {
+      nav {
         background: var(--navy);
-        padding: 14px 28px;
+        padding: 14px 24px;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
       }
-      .header-logo {
+      .nav-logo {
         color: var(--white);
-        font-weight: 800;
+        font-weight: 700;
         font-size: 16px;
         display: flex;
         align-items: center;
         gap: 10px;
+        text-decoration: none;
       }
-      .header-logo .logo-circle {
-        width: 36px;
-        height: 36px;
+      .nav-logo .logo-circle {
+        width: 38px;
+        height: 38px;
         border-radius: 50%;
         background: var(--green);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 13px;
-        font-weight: 800;
+        font-size: 11px;
+        font-weight: 700;
         color: var(--white);
+        flex-shrink: 0;
       }
-      .header-right {
+      .nav-links {
         display: flex;
-        align-items: center;
-        gap: 16px;
+        gap: 24px;
+        list-style: none;
       }
-      .badge-admin {
-        background: var(--green);
-        color: var(--white);
-        font-size: 12px;
-        font-weight: 600;
-        padding: 4px 12px;
-        border-radius: 20px;
-      }
-      .btn-logout {
-        background: transparent;
-        color: rgba(255, 255, 255, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        padding: 6px 14px;
-        border-radius: var(--radius-sm);
-        font-size: 13px;
-        cursor: pointer;
-        transition: all 0.2s;
-      }
-      .btn-logout:hover {
-        background: rgba(255, 255, 255, 0.1);
-        color: var(--white);
-      }
-
-      /* STATS ROW */
-      .stats-row {
-        background: var(--white);
-        border-bottom: 1px solid var(--border);
-        padding: 20px 28px;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 16px;
-      }
-      .stat-box {
-        text-align: center;
-      }
-      .stat-box .num {
-        font-size: 28px;
-        font-weight: 800;
-        color: var(--navy);
-        line-height: 1;
-      }
-      .stat-box .lbl {
-        font-size: 12px;
-        color: var(--text-muted);
-        margin-top: 4px;
-        text-transform: uppercase;
-        letter-spacing: 0.8px;
-      }
-      .stat-box.green .num {
-        color: var(--green);
-      }
-
-      /* FILTERS */
-      .filters {
-        background: var(--white);
-        border-bottom: 1px solid var(--border);
-        padding: 16px 28px;
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-        align-items: center;
-      }
-      .filters input,
-      .filters select {
-        padding: 9px 13px;
-        border: 1.5px solid var(--gray-200);
-        border-radius: var(--radius-sm);
+      .nav-links a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
         font-size: 14px;
-        outline: none;
-        transition: border-color 0.2s;
-        background: var(--white);
+        font-weight: 500;
+        transition: color 0.2s;
       }
-      .filters input:focus,
-      .filters select:focus {
-        border-color: var(--green);
+      .nav-links a:hover {
+        color: var(--green-mid);
       }
-      .filters input {
-        min-width: 220px;
-        flex: 1;
+      .nav-cta {
+        background: var(--green) !important;
+        color: var(--white) !important;
+        padding: 8px 18px;
+        border-radius: var(--radius-sm);
+        font-weight: 600 !important;
       }
-      .btn-refresh {
-        background: var(--green);
-        color: var(--white);
-        padding: 9px 18px;
+      .nav-cta:hover {
+        background: var(--green-dark) !important;
+      }
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        background: none;
         border: none;
-        border-radius: var(--radius-sm);
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background 0.2s;
-        white-space: nowrap;
+        padding: 4px;
       }
-      .btn-refresh:hover {
-        background: var(--green-dark);
-      }
-      .btn-export {
-        background: var(--navy);
-        color: var(--white);
-        padding: 9px 18px;
-        border: none;
-        border-radius: var(--radius-sm);
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background 0.2s;
-        white-space: nowrap;
-      }
-      .btn-export:hover {
-        background: #0d2d4f;
-      }
-
-      /* TABLE */
-      .table-wrap {
-        padding: 24px 28px;
-        overflow-x: auto;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
+      .hamburger span {
+        display: block;
+        width: 24px;
+        height: 2px;
         background: var(--white);
-        border-radius: var(--radius);
-        overflow: hidden;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
-        min-width: 700px;
+        border-radius: 2px;
       }
-      thead {
+      .mobile-menu {
+        display: none;
         background: var(--navy);
+        padding: 16px 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
       }
-      thead th {
+      .mobile-menu.open {
+        display: block;
+      }
+      .mobile-menu a {
+        display: block;
         color: rgba(255, 255, 255, 0.85);
-        font-size: 12px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.8px;
-        padding: 13px 16px;
-        text-align: left;
-        white-space: nowrap;
+        text-decoration: none;
+        padding: 10px 0;
+        font-size: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       }
-      tbody tr {
-        border-bottom: 1px solid var(--border);
-        transition: background 0.15s;
-      }
-      tbody tr:last-child {
+      .mobile-menu a:last-child {
         border-bottom: none;
       }
-      tbody tr:hover {
-        background: var(--gray-100);
-      }
-      tbody td {
-        padding: 13px 16px;
-        font-size: 14px;
-        color: var(--text);
-        vertical-align: middle;
-      }
-      .td-name {
-        font-weight: 600;
-      }
-      .td-id {
-        font-family: monospace;
-        font-size: 13px;
-        color: var(--text-muted);
-      }
-      .ward-badge {
-        background: var(--green-light);
-        color: var(--green-dark);
-        font-size: 11px;
-        font-weight: 600;
-        padding: 3px 9px;
-        border-radius: 20px;
-        white-space: nowrap;
-      }
-      .thumb {
-        width: 48px;
-        height: 32px;
-        object-fit: cover;
-        border-radius: 4px;
-        cursor: pointer;
-        border: 1px solid var(--border);
-        transition: transform 0.2s;
-      }
-      .thumb:hover {
-        transform: scale(1.1);
-      }
-      .td-actions {
-        display: flex;
-        gap: 8px;
-        align-items: center;
-      }
-      .btn-view {
-        background: var(--navy-mid);
+
+      .hero {
+        background: linear-gradient(
+          135deg,
+          var(--navy) 0%,
+          var(--navy-mid) 60%,
+          var(--green-dark) 100%
+        );
         color: var(--white);
-        border: none;
-        padding: 6px 14px;
-        border-radius: var(--radius-sm);
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background 0.2s;
-        white-space: nowrap;
+        padding: 90px 24px 70px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
       }
-      .btn-view:hover {
-        background: var(--navy);
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+        pointer-events: none;
       }
-      .btn-print {
+      .hero-inner {
+        position: relative;
+        max-width: 760px;
+        margin: 0 auto;
+      }
+      .hero h1 {
+        font-size: clamp(30px, 5.5vw, 56px);
+        font-weight: 800;
+        line-height: 1.15;
+        margin-bottom: 16px;
+        letter-spacing: -0.5px;
+      }
+      .hero h1 span {
+        color: var(--green-mid);
+      }
+      .hero-sub {
+        font-size: clamp(15px, 2vw, 18px);
+        opacity: 0.8;
+        margin-bottom: 32px;
+      }
+      .hero-btns {
+        display: flex;
+        gap: 14px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .btn-primary {
         background: var(--green);
         color: var(--white);
-        border: none;
-        padding: 6px 14px;
+        padding: 14px 30px;
         border-radius: var(--radius-sm);
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background 0.2s;
-        white-space: nowrap;
-      }
-      .btn-print:hover {
-        background: var(--green-dark);
-      }
-      .btn-del {
-        background: #fef2f2;
-        color: #b91c1c;
-        border: 1px solid #fecaca;
-        padding: 6px 10px;
-        border-radius: var(--radius-sm);
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background 0.2s;
-      }
-      .btn-del:hover {
-        background: #fee2e2;
-      }
-      .empty-row td {
-        text-align: center;
-        padding: 48px;
-        color: var(--text-muted);
+        font-weight: 700;
         font-size: 15px;
+        text-decoration: none;
+        display: inline-block;
+        transition:
+          background 0.2s,
+          transform 0.1s;
+        border: none;
+        cursor: pointer;
+      }
+      .btn-primary:hover {
+        background: var(--green-dark);
+        transform: translateY(-1px);
+      }
+      .btn-outline {
+        background: transparent;
+        color: var(--white);
+        padding: 13px 30px;
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        font-size: 15px;
+        text-decoration: none;
+        display: inline-block;
+        border: 2px solid rgba(255, 255, 255, 0.55);
+        transition:
+          background 0.2s,
+          transform 0.1s;
+        cursor: pointer;
+      }
+      .btn-outline:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-1px);
       }
 
-      /* MODAL */
-      .modal-overlay {
+      /* COUNT + ABOUT ROW */
+      .count-about-row {
+        display: grid;
+        grid-template-columns: 70% 30%;
+        min-height: 620px;
+      }
+
+      /* ABOUT LEFT */
+      .about-side {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 36px;
+        align-items: start;
+        padding: 60px 48px;
+        background: var(--white);
+        order: 1;
+        border-right: 1px solid var(--border);
+      }
+
+      /* PHOTO SLIDER */
+      .photo-slider-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .photo-slider {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+        height: 380px;
+        background: linear-gradient(135deg, var(--navy-mid), var(--green));
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+      }
+      .slider-track {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: transform;
+        flex-wrap: nowrap;
+      }
+      .slide {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+        height: 100%;
+        position: relative;
+        flex: 0 0 100%;
+        overflow: hidden;
+      }
+      .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        display: block;
+      }
+      .slide-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+        padding: 20px 16px 14px;
+      }
+      .slide-caption p {
+        color: #fff;
+        font-size: 13px;
+        font-weight: 500;
+      }
+      .slide-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 13px;
+      }
+      .slide-placeholder svg {
+        width: 36px;
+        height: 36px;
+        stroke: rgba(255, 255, 255, 0.4);
+        fill: none;
+        stroke-width: 1.5;
+      }
+
+      /* Slider Controls */
+      .slider-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 10;
+        transition:
+          background 0.2s,
+          transform 0.2s;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      }
+      .slider-btn:hover {
+        background: #fff;
+        transform: translateY(-50%) scale(1.05);
+      }
+      .slider-btn svg {
+        width: 16px;
+        height: 16px;
+        stroke: var(--navy);
+        fill: none;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .slider-btn.prev {
+        left: 10px;
+      }
+      .slider-btn.next {
+        right: 10px;
+      }
+      .slider-dots {
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        padding: 8px 0 2px;
+      }
+      .slider-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--gray-200);
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        transition:
+          background 0.2s,
+          width 0.2s;
+      }
+      .slider-dot.active {
+        background: var(--green);
+        width: 22px;
+        border-radius: 4px;
+      }
+
+      .candidate-name {
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--gray-900);
+        margin-top: 4px;
+      }
+      .candidate-title {
+        font-size: 13px;
+        color: var(--green-dark);
+        font-weight: 600;
+        margin-top: 2px;
+      }
+      .about-content {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        padding-top: 4px;
+      }
+      .section-label {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--green);
+        text-transform: uppercase;
+        letter-spacing: 1.8px;
+      }
+      .section-title {
+        font-size: clamp(22px, 2.8vw, 30px);
+        font-weight: 800;
+        color: var(--gray-900);
+        line-height: 1.25;
+        letter-spacing: -0.3px;
+      }
+      .section-desc {
+        font-size: 15px;
+        color: var(--text-muted);
+        line-height: 1.75;
+      }
+      .about-points {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-top: 4px;
+      }
+      .about-point {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+      }
+      .check-circle {
+        width: 22px;
+        height: 22px;
+        min-width: 22px;
+        border-radius: 50%;
+        background: var(--green-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 2px;
+      }
+      .check-circle svg {
+        width: 12px;
+        height: 12px;
+        stroke: var(--green-dark);
+        fill: none;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .about-point p {
+        font-size: 14px;
+        color: var(--text-muted);
+        line-height: 1.6;
+      }
+
+      /* COUNT RIGHT */
+      .count-section {
+        background: var(--gray-100);
+        padding: 60px 40px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        order: 2;
+      }
+      .count-inner {
+        background: var(--white);
+        border: 3px solid #111;
+        border-radius: 8px;
+        padding: 44px 36px;
+        width: 100%;
+        max-width: 420px;
+      }
+      .count-question {
+        font-size: 19px;
+        font-weight: 700;
+        font-style: italic;
+        color: #111;
+        margin-bottom: 6px;
+        font-family: Georgia, serif;
+      }
+      .count-headline {
+        font-size: clamp(24px, 3.5vw, 36px);
+        font-weight: 900;
+        color: #111;
+        letter-spacing: -0.5px;
+        margin-bottom: 20px;
+        line-height: 1.1;
+      }
+      .count-number {
+        font-size: clamp(56px, 8vw, 88px);
+        font-weight: 900;
+        background: linear-gradient(135deg, #185fa5, #1d9e75);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        margin-bottom: 10px;
+      }
+      .count-sub {
+        font-size: 15px;
+        color: var(--text-muted);
+        margin-bottom: 24px;
+      }
+      .count-btn {
+        display: block;
+        background: linear-gradient(135deg, #185fa5, #1d9e75);
+        color: #fff;
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        padding: 14px 24px;
+        border-radius: 6px;
+        text-decoration: none;
+        transition:
+          opacity 0.2s,
+          transform 0.1s;
+      }
+      .count-btn:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+      }
+
+      .stats-bar {
+        background: var(--navy);
+        padding: 40px 24px;
+      }
+      .stats-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 24px;
+        text-align: center;
+      }
+      .stat-num {
+        font-size: 40px;
+        font-weight: 800;
+        color: var(--green-mid);
+        margin-bottom: 5px;
+        line-height: 1;
+      }
+      .stat-label {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.65);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 500;
+      }
+
+      .section {
+        padding: 72px 24px;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .section-title-lg {
+        font-size: clamp(24px, 3.5vw, 36px);
+        font-weight: 800;
+        color: var(--gray-900);
+        margin-bottom: 16px;
+        line-height: 1.25;
+        letter-spacing: -0.3px;
+      }
+      .section-desc-lg {
+        font-size: 16px;
+        color: var(--text-muted);
+        line-height: 1.75;
+        max-width: 640px;
+      }
+      .divider {
+        height: 1px;
+        background: var(--border);
+        margin: 0 24px;
+      }
+
+      .pillars-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-top: 44px;
+      }
+      .pillar-card {
+        background: var(--gray-100);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 26px 22px;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s,
+          transform 0.2s;
+      }
+      .pillar-card:hover {
+        border-color: var(--green);
+        box-shadow: 0 4px 20px rgba(29, 158, 117, 0.12);
+        transform: translateY(-2px);
+      }
+      .pillar-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 10px;
+        background: var(--green-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+      }
+      .pillar-icon svg {
+        width: 24px;
+        height: 24px;
+        stroke: var(--green-dark);
+        fill: none;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .pillar-card h3 {
+        font-size: 15px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: var(--gray-900);
+      }
+      .pillar-card p {
+        font-size: 13px;
+        color: var(--text-muted);
+        line-height: 1.65;
+      }
+
+      .wards-section {
+        background: var(--gray-100);
+        padding: 72px 24px;
+      }
+      .wards-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .wards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        gap: 14px;
+        margin-top: 32px;
+      }
+      .ward-card {
+        background: var(--white);
+        border: 1.5px solid var(--green);
+        border-radius: var(--radius);
+        padding: 22px 16px;
+        text-align: center;
+        transition:
+          box-shadow 0.2s,
+          transform 0.2s;
+      }
+      .ward-card:hover {
+        box-shadow: 0 4px 16px rgba(29, 158, 117, 0.15);
+        transform: translateY(-2px);
+      }
+      .ward-icon {
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+      .ward-name {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--gray-900);
+        margin-bottom: 4px;
+      }
+      .ward-sub {
+        font-size: 12px;
+        color: var(--green-dark);
+        font-weight: 500;
+      }
+
+      .register-section {
+        background: var(--gray-100);
+        padding: 72px 24px;
+      }
+      .register-inner {
+        max-width: 760px;
+        margin: 0 auto;
+      }
+      .form-card {
+        background: var(--white);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        padding: 36px;
+        margin-top: 36px;
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .form-group label {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--gray-600);
+      }
+      .form-group label span {
+        color: #e74c3c;
+        margin-left: 2px;
+      }
+      .form-group input,
+      .form-group select {
+        padding: 11px 14px;
+        border: 1.5px solid var(--gray-200);
+        border-radius: var(--radius-sm);
+        font-size: 15px;
+        color: var(--text);
+        background: var(--white);
+        transition: border-color 0.2s;
+        outline: none;
+        width: 100%;
+      }
+      .form-group input:focus,
+      .form-group select:focus {
+        border-color: var(--green);
+      }
+
+      .id-capture {
+        border: 1.5px solid var(--gray-200);
+        border-radius: var(--radius-sm);
+        overflow: hidden;
+      }
+      .id-capture-btns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      .id-capture-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 10px 12px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        background: var(--gray-100);
+        color: var(--gray-600);
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      .id-capture-btn:first-child {
+        border-right: 1px solid var(--gray-200);
+      }
+      .id-capture-btn:hover {
+        background: var(--green-light);
+        color: var(--green-dark);
+      }
+      .id-capture-btn svg {
+        width: 16px;
+        height: 16px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        flex-shrink: 0;
+      }
+      .id-capture-btn input[type="file"] {
+        display: none;
+      }
+      .id-preview-wrap {
+        position: relative;
+        background: var(--gray-100);
+        min-height: 100px;
+        display: none;
+      }
+      .id-preview-wrap.has-image {
+        display: block;
+      }
+      .id-preview-wrap img {
+        width: 100%;
+        max-height: 160px;
+        object-fit: contain;
+        display: block;
+        background: var(--gray-100);
+      }
+      .id-preview-remove {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        background: rgba(0, 0, 0, 0.55);
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+      }
+      .id-placeholder {
+        padding: 20px;
+        text-align: center;
+        color: var(--gray-400);
+        font-size: 13px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+      }
+      .id-placeholder svg {
+        width: 28px;
+        height: 28px;
+        stroke: var(--gray-300);
+        fill: none;
+        stroke-width: 1.5;
+      }
+
+      .camera-modal {
+        display: none;
         position: fixed;
         inset: 0;
-        background: rgba(0, 0, 0, 0.6);
-        z-index: 200;
-        display: none;
+        background: rgba(0, 0, 0, 0.85);
+        z-index: 500;
         align-items: center;
         justify-content: center;
         padding: 20px;
       }
-      .modal-overlay.open {
+      .camera-modal.open {
         display: flex;
       }
-      .modal {
+      .camera-box {
         background: var(--white);
         border-radius: var(--radius);
         width: 100%;
-        max-width: 680px;
-        max-height: 90vh;
-        overflow-y: auto;
+        max-width: 560px;
+        overflow: hidden;
       }
-      .modal-header {
-        padding: 20px 24px 16px;
+      .camera-header {
+        padding: 16px 20px;
         border-bottom: 1px solid var(--border);
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
-      .modal-header h2 {
-        font-size: 18px;
-        font-weight: 800;
+      .camera-header h3 {
+        font-size: 16px;
+        font-weight: 700;
       }
-      .modal-close {
+      .camera-close {
         background: var(--gray-200);
         border: none;
-        width: 30px;
-        height: 30px;
+        width: 28px;
+        height: 28px;
         border-radius: 50%;
-        font-size: 16px;
+        font-size: 15px;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
+      }
+      .camera-video-wrap {
+        position: relative;
+        background: #000;
+      }
+      .camera-video-wrap video {
+        width: 100%;
+        display: block;
+        max-height: 340px;
+        object-fit: cover;
+      }
+      .camera-guide {
+        position: absolute;
+        inset: 12px;
+        border: 2px dashed rgba(255, 255, 255, 0.4);
+        border-radius: 8px;
+        pointer-events: none;
+      }
+      .camera-footer {
+        padding: 16px 20px;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        background: var(--gray-100);
+      }
+      .btn-capture {
+        background: var(--green);
+        color: var(--white);
+        border: none;
+        padding: 12px 28px;
+        border-radius: var(--radius-sm);
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
         transition: background 0.2s;
       }
-      .modal-close:hover {
+      .btn-capture:hover {
+        background: var(--green-dark);
+      }
+      .btn-capture svg {
+        width: 18px;
+        height: 18px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+      }
+      .btn-cancel-cam {
+        background: var(--white);
+        color: var(--gray-600);
+        border: 1.5px solid var(--gray-200);
+        padding: 12px 20px;
+        border-radius: var(--radius-sm);
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .btn-cancel-cam:hover {
         background: var(--gray-200);
       }
-      .modal-body {
-        padding: 24px;
+
+      .form-submit {
+        margin-top: 24px;
       }
-      .detail-grid {
+      .form-submit button {
+        background: var(--green);
+        color: var(--white);
+        padding: 14px 40px;
+        border-radius: var(--radius-sm);
+        font-weight: 700;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s;
+        width: 100%;
+      }
+      .form-submit button:hover {
+        background: var(--green-dark);
+      }
+      .form-submit button:disabled {
+        background: var(--gray-400);
+        cursor: not-allowed;
+      }
+      .form-message {
+        margin-top: 16px;
+        padding: 12px 16px;
+        border-radius: var(--radius-sm);
+        font-size: 14px;
+        font-weight: 500;
+        display: none;
+      }
+      .form-message.success {
+        background: var(--green-light);
+        color: var(--green-dark);
+        display: block;
+      }
+      .form-message.error {
+        background: #fef2f2;
+        color: #b91c1c;
+        display: block;
+      }
+
+      .cta-section {
+        background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+        padding: 80px 24px;
+        text-align: center;
+        color: var(--white);
+      }
+      .cta-section h2 {
+        font-size: clamp(26px, 4vw, 42px);
+        font-weight: 800;
+        margin-bottom: 16px;
+      }
+      .cta-section p {
+        font-size: 17px;
+        opacity: 0.85;
+        margin-bottom: 36px;
+        max-width: 520px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.7;
+      }
+
+      .contact-section {
+        padding: 72px 24px;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .contact-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-        margin-bottom: 24px;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-top: 36px;
       }
-      .detail-item label {
-        font-size: 11px;
+      .contact-card {
+        background: var(--gray-100);
+        border-radius: var(--radius);
+        padding: 24px;
+        text-align: center;
+      }
+      .contact-card .contact-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--green-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 14px;
+      }
+      .contact-card .contact-icon svg {
+        width: 22px;
+        height: 22px;
+        stroke: var(--green-dark);
+        fill: none;
+        stroke-width: 1.8;
+      }
+      .contact-card h4 {
+        font-size: 13px;
         font-weight: 600;
         color: var(--text-muted);
         text-transform: uppercase;
         letter-spacing: 0.8px;
-        display: block;
-        margin-bottom: 4px;
-      }
-      .detail-item span {
-        font-size: 15px;
-        font-weight: 600;
-        color: var(--text);
-      }
-      .id-images {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-        margin-bottom: 20px;
-      }
-      .id-img-box label {
-        font-size: 12px;
-        font-weight: 600;
-        color: var(--text-muted);
-        display: block;
         margin-bottom: 6px;
-        text-transform: uppercase;
-        letter-spacing: 0.6px;
       }
-      .id-img-box img {
-        width: 100%;
-        border-radius: var(--radius-sm);
-        border: 1px solid var(--border);
-        object-fit: contain;
-        background: var(--gray-100);
-        max-height: 180px;
-      }
-      .modal-footer {
-        padding: 16px 24px;
-        border-top: 1px solid var(--border);
-        display: flex;
-        gap: 10px;
-        justify-content: flex-end;
-      }
-      .btn-modal-print {
-        background: var(--green);
-        color: var(--white);
-        border: none;
-        padding: 10px 24px;
-        border-radius: var(--radius-sm);
-        font-size: 14px;
-        font-weight: 700;
-        cursor: pointer;
-      }
-      .btn-modal-close {
-        background: var(--gray-200);
-        color: var(--text);
-        border: none;
-        padding: 10px 20px;
-        border-radius: var(--radius-sm);
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-      }
-
-      /* LOADING */
-      .loading {
-        text-align: center;
-        padding: 60px;
-        color: var(--text-muted);
+      .contact-card p {
         font-size: 15px;
+        font-weight: 600;
+        color: var(--gray-900);
       }
-      .spinner {
-        width: 32px;
-        height: 32px;
-        border: 3px solid var(--gray-200);
-        border-top-color: var(--green);
-        border-radius: 50%;
-        animation: spin 0.7s linear infinite;
-        margin: 0 auto 14px;
+      .contact-card a {
+        color: var(--green-dark);
+        text-decoration: none;
       }
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
+      .contact-card a:hover {
+        text-decoration: underline;
       }
 
-      /* PRINT STYLES */
-      @media print {
-        @page {
-          size: A4 portrait;
-          margin: 0;
+      footer {
+        background: #05111f;
+        padding: 36px 24px;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.45);
+        font-size: 13px;
+        line-height: 1.8;
+      }
+      footer strong {
+        color: rgba(255, 255, 255, 0.75);
+      }
+      .footer-links {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+      }
+      .footer-links a {
+        color: rgba(255, 255, 255, 0.5);
+        text-decoration: none;
+        font-size: 13px;
+        transition: color 0.2s;
+      }
+      .footer-links a:hover {
+        color: var(--green-mid);
+      }
+
+      @media (max-width: 900px) {
+        .count-about-row {
+          grid-template-columns: 1fr;
         }
-        body * {
-          visibility: hidden;
+        .about-side {
+          grid-template-columns: 1fr;
+          padding: 48px 24px;
+          gap: 24px;
+          order: 1;
+          border-right: none;
+          border-bottom: 1px solid var(--border);
         }
-        #print-area,
-        #print-area * {
-          visibility: visible;
+        .photo-slider {
+          height: 260px;
         }
-        #print-area {
-          position: fixed;
-          inset: 0;
-          background: white;
-          width: 210mm;
-          height: 297mm;
+        .count-section {
+          order: 2;
+          padding: 52px 24px;
+        }
+      }
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+        .hamburger {
           display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 8mm;
-          padding: 12mm;
-          page-break-inside: avoid;
         }
-        .print-img-box {
-          width: 100%;
-          height: 126mm;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+        .hero {
+          padding: 60px 20px 50px;
         }
-        .print-img-box img {
-          max-width: 100%;
-          max-height: 126mm;
-          width: auto;
-          height: auto;
-          object-fit: contain;
-          border: 0.5px solid #ccc;
-          border-radius: 4px;
-          display: block;
+        .section {
+          padding: 52px 20px;
         }
-        .print-divider {
-          width: 50%;
-          height: 0.5px;
-          background: #ddd;
-          flex-shrink: 0;
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+        .form-card {
+          padding: 24px 20px;
         }
       }
     </style>
   </head>
   <body>
-    <!-- LOGIN SCREEN -->
-    <div class="login-wrap" id="loginScreen">
-      <div class="login-card">
-        <div class="login-logo">WD</div>
-        <h1>Admin Panel</h1>
-        <p>Wahinya Duncan Waweru Campaign</p>
-        <div class="login-error" id="loginError">
-          Incorrect password. Please try again.
+    <!-- NAV -->
+    <nav>
+      <a href="#" class="nav-logo">
+        <div class="logo-circle">DWW</div>
+        <span>Wahinya Duncan Waweru</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#vision">Vision</a></li>
+        <li><a href="#wards">Wards</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#register" class="nav-cta">Register Support</a></li>
+      </ul>
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#about" onclick="toggleMenu()">About</a>
+      <a href="#vision" onclick="toggleMenu()">Vision</a>
+      <a href="#wards" onclick="toggleMenu()">Wards</a>
+      <a href="#contact" onclick="toggleMenu()">Contact</a>
+      <a
+        href="#register"
+        onclick="toggleMenu()"
+        style="color: var(--green-mid); font-weight: 700"
+        >Register Support →</a
+      >
+    </div>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-inner">
+        <h1>NEW GENERATION<br /><span>Leadership</span></h1>
+        <p class="hero-sub">Dagoretti South Constituency — 2027</p>
+        <div class="hero-btns">
+          <a href="#register" class="btn-primary"
+            >Click to Join the Network →</a
+          >
+          <a href="#about" class="btn-outline">Learn More</a>
         </div>
-        <input
-          type="password"
-          id="passwordInput"
-          placeholder="Enter admin password"
-          onkeypress="if (event.key === 'Enter') login();"
-        />
-        <button onclick="login()">Sign In →</button>
+      </div>
+    </section>
+
+    <!-- COUNT + ABOUT ROW -->
+    <div class="count-about-row">
+      <!-- About — LEFT -->
+      <div class="about-side" id="about">
+        <div class="photo-slider-wrap">
+          <!-- PHOTO SLIDER -->
+          <!-- To add photos: upload photo1.jpg, photo2.jpg, photo3.jpg etc to GitHub alongside index.html -->
+          <div class="photo-slider">
+            <div class="slider-track" id="sliderTrack">
+              <!-- SLIDE 1 — replace src with your photo filenames -->
+              <div class="slide">
+                <img
+                  src="photo.png"
+                  alt="Wahinya Duncan Waweru"
+                  onerror="
+                    this.parentElement.innerHTML =
+                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Wahinya Duncan Waweru</span></div>'
+                  "
+                />
+                <div class="slide-caption">
+                  <p>Wahinya Duncan Waweru</p>
+                </div>
+              </div>
+
+              <!-- SLIDE 2 -->
+              <div class="slide">
+                <img
+                  src="photo2.png"
+                  alt="On the ground"
+                  onerror="
+                    this.parentElement.innerHTML =
+                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Add photo2.jpg to your repo</span></div>'
+                  "
+                />
+                <div class="slide-caption">
+                  <p>Dagoretti South</p>
+                </div>
+              </div>
+
+              <!-- SLIDE 3 -->
+              <div class="slide">
+                <img
+                  src="photo3.png"
+                  alt="Community meeting"
+                  onerror="
+                    this.parentElement.innerHTML =
+                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Add photo3.jpg to your repo</span></div>'
+                  "
+                />
+                <div class="slide-caption">
+                  <p>14th Parliament</p>
+                </div>
+              </div>
+
+              <!-- SLIDE 4 -->
+              <div class="slide">
+                <img
+                  src="photo4.png"
+                  alt="Campaign rally"
+                  onerror="
+                    this.parentElement.innerHTML =
+                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Add photo4.jpg to your repo</span></div>'
+                  "
+                />
+                <div class="slide-caption">
+                  <p>Order members 😊</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Prev / Next buttons -->
+            <button
+              class="slider-btn prev"
+              onclick="slideMove(-1)"
+              aria-label="Previous"
+            >
+              <svg viewBox="0 0 24 24">
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+            </button>
+            <button
+              class="slider-btn next"
+              onclick="slideMove(1)"
+              aria-label="Next"
+            >
+              <svg viewBox="0 0 24 24">
+                <polyline points="9 6 15 12 9 18" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Dots -->
+          <div class="slider-dots" id="sliderDots"></div>
+
+          <p class="candidate-name">Wahinya Duncan Waweru</p>
+          <p class="candidate-title">Dagoretti South MP in Waiting</p>
+        </div>
+
+        <div class="about-content">
+          <div class="section-label">About the Candidate</div>
+          <h2 class="section-title">
+            Born Here. Live Here.<br />Fighting for Here.
+          </h2>
+          <p class="section-desc">
+            I am Wahinya Duncan Waweru — an engineer, a son of Dagoretti South,
+            and someone who is tired of watching our constituency's potential be
+            stolen by corruption and bad policies.
+          </p>
+          <p class="section-desc" style="margin-top: 10px">
+            I grew up in these streets. I built my career here. Every day I see
+            brilliant young people with no jobs, roads unfixed for years, and
+            leaders who only show up at election time.
+          </p>
+          <p class="section-desc" style="margin-top: 10px">
+            As an engineer, I am trained to solve problems — not talk about
+            them. Public money should build real things: classrooms, roads, and
+            opportunities. Not disappear into someone's pocket.
+          </p>
+          <p
+            class="section-desc"
+            style="margin-top: 10px; font-weight: 700; color: var(--navy)"
+          >
+            This is not about politics. It is about our children's future. And I
+            need you standing with me.
+          </p>
+          <div class="about-points">
+            <div class="about-point">
+              <div class="check-circle">
+                <svg viewBox="0 0 12 12">
+                  <polyline points="2,6 5,9 10,3" />
+                </svg>
+              </div>
+              <p>
+                Engineer with hands-on experience delivering real projects on
+                time and on budget
+              </p>
+            </div>
+            <div class="about-point">
+              <div class="check-circle">
+                <svg viewBox="0 0 12 12">
+                  <polyline points="2,6 5,9 10,3" />
+                </svg>
+              </div>
+              <p>
+                Zero tolerance for corruption — every shilling of public funds
+                must be accounted for
+              </p>
+            </div>
+            <div class="about-point">
+              <div class="check-circle">
+                <svg viewBox="0 0 12 12">
+                  <polyline points="2,6 5,9 10,3" />
+                </svg>
+              </div>
+              <p>
+                Committed to youth jobs, bursaries, and putting Dagoretti South
+                on the map
+              </p>
+            </div>
+            <div class="about-point">
+              <div class="check-circle">
+                <svg viewBox="0 0 12 12">
+                  <polyline points="2,6 5,9 10,3" />
+                </svg>
+              </div>
+              <p>
+                A leader who will be present — not just at election time, but
+                every single day
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Count — RIGHT -->
+      <div class="count-section">
+        <div class="count-inner">
+          <p class="count-question">Sisi Ndio Wahinya</p>
+          <h2 class="count-headline">KWANI TUKO WANGAPI?</h2>
+          <div class="count-number" id="count-display">...</div>
+          <p class="count-sub">people have joined so far!</p>
+          <a href="#register" class="count-btn">COUNT ME IN</a>
+        </div>
       </div>
     </div>
 
-    <!-- ADMIN APP -->
-    <div class="app" id="appShell">
-      <header>
-        <div class="header-logo">
-          <div class="logo-circle">WD</div>
-          <span>Wahinya Duncan — Admin Panel</span>
+    <!-- STATS -->
+    <div class="stats-bar">
+      <div class="stats-inner">
+        <div>
+          <div class="stat-num">5</div>
+          <div class="stat-label">Wards Served</div>
         </div>
-        <div class="header-right">
-          <span class="badge-admin">Admin</span>
-          <button class="btn-logout" onclick="logout()">Logout</button>
+        <div>
+          <div class="stat-num">2027</div>
+          <div class="stat-label">Election Year</div>
         </div>
-      </header>
-
-      <div class="stats-row" id="statsRow">
-        <div class="stat-box green">
-          <div class="num" id="st-total">—</div>
-          <div class="lbl">Total Supporters</div>
+        <div>
+          <div class="stat-num">5</div>
+          <div class="stat-label">Pillars of Change</div>
         </div>
-        <div class="stat-box">
-          <div class="num" id="st-riruta">—</div>
-          <div class="lbl">Riruta</div>
+        <div>
+          <div class="stat-num" id="supporter-count">...</div>
+          <div class="stat-label">Registered Supporters</div>
         </div>
-        <div class="stat-box">
-          <div class="num" id="st-waithaka">—</div>
-          <div class="lbl">Waithaka</div>
-        </div>
-        <div class="stat-box">
-          <div class="num" id="st-uthiru">—</div>
-          <div class="lbl">Uthiru/Ruthimitu</div>
-        </div>
-        <div class="stat-box">
-          <div class="num" id="st-mutuini">—</div>
-          <div class="lbl">Mutuini</div>
-        </div>
-        <div class="stat-box">
-          <div class="num" id="st-ngando">—</div>
-          <div class="lbl">Ngando</div>
-        </div>
-      </div>
-
-      <div class="filters">
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="Search by name, phone, or ID number..."
-          oninput="applyFilters()"
-        />
-        <select id="wardFilter" onchange="applyFilters()">
-          <option value="">All Wards</option>
-          <option value="Riruta">Riruta</option>
-          <option value="Waithaka">Waithaka</option>
-          <option value="UthiruRuthimitu">Uthiru / Ruthimitu</option>
-          <option value="Mutuini">Mutuini</option>
-          <option value="Ngando">Ngando</option>
-        </select>
-        <button class="btn-refresh" onclick="loadData()">↻ Refresh</button>
-        <button class="btn-export" onclick="exportCSV()">↓ Export CSV</button>
-      </div>
-
-      <div class="table-wrap">
-        <div class="loading" id="loadingState">
-          <div class="spinner"></div>
-          Loading supporters...
-        </div>
-        <table id="dataTable" style="display: none">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Full Name</th>
-              <th>ID Number</th>
-              <th>Phone</th>
-              <th>Ward</th>
-              <th>Front ID</th>
-              <th>Back ID</th>
-              <th>Registered</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="tableBody"></tbody>
-        </table>
       </div>
     </div>
 
-    <!-- DETAIL / PRINT MODAL -->
-    <div
-      class="modal-overlay"
-      id="modalOverlay"
-      onclick="if (event.target === this) closeModal();"
-    >
-      <div class="modal">
-        <div class="modal-header">
-          <h2 id="modalTitle">Supporter Details</h2>
-          <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="divider"></div>
+
+    <!-- PILLARS -->
+    <section class="section" id="vision">
+      <div class="section-label">The Vision</div>
+      <h2 class="section-title-lg">Five Pillars of Transformation</h2>
+      <p class="section-desc-lg">
+        A comprehensive agenda to create real, lasting change for every family
+        in Dagoretti South.
+      </p>
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5z" />
+              <path d="M2 17l10 5 10-5" />
+              <path d="M2 12l10 5 10-5" />
+            </svg>
+          </div>
+          <h3>Education</h3>
+          <p>
+            Bursaries, school infrastructure, and digital literacy programmes
+            for every child in Dagoretti South.
+          </p>
         </div>
-        <div class="modal-body" id="modalBody"></div>
-        <div class="modal-footer">
-          <button class="btn-modal-print" onclick="printRecord()">
-            🖨 Print A4
+        <div class="pillar-card">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24">
+              <rect x="2" y="7" width="20" height="14" rx="2" />
+              <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" />
+              <line x1="12" y1="12" x2="12" y2="16" />
+              <line x1="10" y1="14" x2="14" y2="14" />
+            </svg>
+          </div>
+          <h3>Economic Empowerment</h3>
+          <p>
+            Youth and women enterprise funds, market access, and job creation
+            initiatives.
+          </p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+            </svg>
+          </div>
+          <h3>Healthcare</h3>
+          <p>
+            Upgraded health facilities, affordable medical access, and mental
+            health support for all residents.
+          </p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+          </div>
+          <h3>Infrastructure</h3>
+          <p>
+            Roads, drainage, clean water, and sanitation for a dignified quality
+            of life.
+          </p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+              />
+            </svg>
+          </div>
+          <h3>Good Governance</h3>
+          <p>
+            Transparent use of public funds, open participation, and zero
+            tolerance for corruption.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WARDS -->
+    <div class="wards-section" id="wards">
+      <div class="wards-inner">
+        <div class="section-label">Coverage</div>
+        <h2 class="section-title-lg">Serving All Five Wards</h2>
+        <p class="section-desc-lg">
+          Every ward in Dagoretti South Constituency will benefit from focused,
+          dedicated representation.
+        </p>
+        <div class="wards-grid">
+          <div class="ward-card">
+            <div class="ward-icon">🏘️</div>
+            <div class="ward-name">Riruta</div>
+            <div class="ward-sub">Ward 1</div>
+          </div>
+          <div class="ward-card">
+            <div class="ward-icon">🏘️</div>
+            <div class="ward-name">Waithaka</div>
+            <div class="ward-sub">Ward 2</div>
+          </div>
+          <div class="ward-card">
+            <div class="ward-icon">🏘️</div>
+            <div class="ward-name">Uthiru / Ruthimitu</div>
+            <div class="ward-sub">Ward 3</div>
+          </div>
+          <div class="ward-card">
+            <div class="ward-icon">🏘️</div>
+            <div class="ward-name">Mutuini</div>
+            <div class="ward-sub">Ward 4</div>
+          </div>
+          <div class="ward-card">
+            <div class="ward-icon">🏘️</div>
+            <div class="ward-name">Ngando</div>
+            <div class="ward-sub">Ward 5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REGISTRATION FORM -->
+    <div class="register-section" id="register">
+      <div class="register-inner">
+        <div class="section-label">Join the Movement</div>
+        <h2 class="section-title-lg">Register Your Support</h2>
+        <p class="section-desc-lg">
+          Join our campaign by registering your details and National ID. Your
+          information is securely stored and used only for campaign purposes.
+        </p>
+        <div class="form-card">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Full Name <span>*</span></label>
+              <input type="text" id="reg-name" placeholder="e.g., John Kamau" />
+            </div>
+            <div class="form-group">
+              <label>Phone Number <span>*</span></label>
+              <input
+                type="tel"
+                id="reg-phone"
+                placeholder="e.g., +254712345678"
+              />
+            </div>
+            <div class="form-group">
+              <label>National ID Number <span>*</span></label>
+              <input
+                type="text"
+                id="reg-idnumber"
+                placeholder="e.g., 12345678"
+              />
+            </div>
+            <div class="form-group">
+              <label>Ward <span>*</span></label>
+              <select id="reg-ward">
+                <option value="">-- Select your ward --</option>
+                <option value="Riruta">Riruta</option>
+                <option value="Waithaka">Waithaka</option>
+                <option value="UthiruRuthimitu">Uthiru / Ruthimitu</option>
+                <option value="Mutuini">Mutuini</option>
+                <option value="Ngando">Ngando</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>ID Front Side <span>*</span></label>
+              <div class="id-capture">
+                <div class="id-capture-btns">
+                  <label class="id-capture-btn">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                      <polyline points="17 8 12 3 7 8" />
+                      <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
+                    Upload File
+                    <input
+                      type="file"
+                      id="front-file"
+                      accept="image/*"
+                      onchange="handleFileSelect(this, 'front')"
+                    />
+                  </label>
+                  <button
+                    type="button"
+                    class="id-capture-btn"
+                    onclick="openCamera('front')"
+                  >
+                    <svg viewBox="0 0 24 24">
+                      <path
+                        d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"
+                      />
+                      <circle cx="12" cy="13" r="4" />
+                    </svg>
+                    Use Camera
+                  </button>
+                </div>
+                <div class="id-placeholder" id="front-placeholder">
+                  <svg viewBox="0 0 24 24">
+                    <rect x="2" y="5" width="20" height="14" rx="2" />
+                    <line x1="2" y1="10" x2="22" y2="10" />
+                  </svg>
+                  <span>Upload or capture front of ID</span>
+                </div>
+                <div class="id-preview-wrap" id="front-preview-wrap">
+                  <img id="front-preview" alt="Front ID" />
+                  <button
+                    class="id-preview-remove"
+                    onclick="removeImage('front')"
+                    title="Remove"
+                  >
+                    ✕
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>ID Back Side <span>*</span></label>
+              <div class="id-capture">
+                <div class="id-capture-btns">
+                  <label class="id-capture-btn">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                      <polyline points="17 8 12 3 7 8" />
+                      <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
+                    Upload File
+                    <input
+                      type="file"
+                      id="back-file"
+                      accept="image/*"
+                      onchange="handleFileSelect(this, 'back')"
+                    />
+                  </label>
+                  <button
+                    type="button"
+                    class="id-capture-btn"
+                    onclick="openCamera('back')"
+                  >
+                    <svg viewBox="0 0 24 24">
+                      <path
+                        d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"
+                      />
+                      <circle cx="12" cy="13" r="4" />
+                    </svg>
+                    Use Camera
+                  </button>
+                </div>
+                <div class="id-placeholder" id="back-placeholder">
+                  <svg viewBox="0 0 24 24">
+                    <rect x="2" y="5" width="20" height="14" rx="2" />
+                    <line x1="2" y1="10" x2="22" y2="10" />
+                  </svg>
+                  <span>Upload or capture back of ID</span>
+                </div>
+                <div class="id-preview-wrap" id="back-preview-wrap">
+                  <img id="back-preview" alt="Back ID" />
+                  <button
+                    class="id-preview-remove"
+                    onclick="removeImage('back')"
+                    title="Remove"
+                  >
+                    ✕
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-submit">
+            <button id="reg-btn" onclick="submitRegistration()">
+              Complete Registration →
+            </button>
+          </div>
+          <div class="form-message" id="form-message"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CAMERA MODAL -->
+    <div class="camera-modal" id="cameraModal">
+      <div class="camera-box">
+        <div class="camera-header">
+          <h3 id="camera-title">Capture ID Front</h3>
+          <button class="camera-close" onclick="closeCamera()">✕</button>
+        </div>
+        <div class="camera-video-wrap">
+          <video id="camera-video" autoplay playsinline muted></video>
+          <div class="camera-guide"></div>
+        </div>
+        <div class="camera-footer">
+          <button class="btn-capture" onclick="capturePhoto()">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" />
+              <circle cx="12" cy="12" r="4" fill="currentColor" />
+            </svg>
+            Capture
           </button>
-          <button class="btn-modal-close" onclick="closeModal()">Close</button>
+          <button class="btn-cancel-cam" onclick="closeCamera()">Cancel</button>
         </div>
       </div>
     </div>
 
-    <!-- HIDDEN PRINT AREA -->
-    <div id="print-area" style="display: none"></div>
+    <!-- CTA -->
+    <section class="cta-section">
+      <h2>Be Part of the Change</h2>
+      <p>
+        Join thousands of residents who believe in a better Dagoretti South.
+        Register your support today and help us build a great generation
+        together.
+      </p>
+      <a href="#register" class="btn-primary">Register Your Support →</a>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact-section" id="contact">
+      <div class="section-label">Get in Touch</div>
+      <h2 class="section-title-lg">Contact the Campaign</h2>
+      <p class="section-desc-lg">
+        Reach out for inquiries, volunteering, or to invite the candidate to
+        your community event.
+      </p>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"
+              />
+            </svg>
+          </div>
+          <h4>Phone</h4>
+          <p><a href="tel:+254725146670">+254 725 146 670</a></p>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+              />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+          </div>
+          <h4>Email</h4>
+          <p>
+            <a href="mailto:wahinyaduncan@gmail.com">wahinyaduncan@gmail.com</a>
+          </p>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"
+              />
+            </svg>
+          </div>
+          <h4>WhatsApp</h4>
+          <p>
+            <a href="https://wa.me/254725146670" target="_blank"
+              >Chat with us</a
+            >
+          </p>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+          </div>
+          <h4>Location</h4>
+          <p>Dagoretti South, Nairobi</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#vision">Vision</a>
+        <a href="#wards">Wards</a>
+        <a href="#register">Register</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <p>
+        <strong>Wahinya Duncan Waweru</strong> — Building a Great Generation
+        Together
+      </p>
+      <p style="margin-top: 6px">
+        Dagoretti South Constituency &nbsp;|&nbsp; 2027 General Elections
+        &nbsp;|&nbsp; &copy; 2027 All Rights Reserved
+      </p>
+    </footer>
 
     <script>
       const SUPABASE_URL = "https://udmqdtminnfcjclvlxub.supabase.co";
       const SUPABASE_ANON_KEY =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVkbXFkdG1pbm5mY2pjbHZseHViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NzI4MzAsImV4cCI6MjA5MDE0ODgzMH0.tFSld83r8vrkErZ3ZnVbtgOYnMDeckhZfFOmvLSoIFI";
-      const ADMIN_HASH =
-        "d143e4011dadc35ab428c35986d224dc0169f29f373fa90e922c752b4a6b58ba";
       const { createClient } = supabase;
       const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-      let allRecords = [];
-      let currentRecord = null;
+      // ── PHOTO SLIDER ──
+      let slideIndex = 0;
+      let slideTimer;
+      const totalSlides = document.querySelectorAll(".slide").length;
+      const track = document.getElementById("sliderTrack");
+      const dotsContainer = document.getElementById("sliderDots");
 
-      // ── AUTH ──
-      async function login() {
-        const pwd = document.getElementById("passwordInput").value;
-        const buf = await crypto.subtle.digest(
-          "SHA-256",
-          new TextEncoder().encode(pwd),
-        );
-        const hash = Array.from(new Uint8Array(buf))
-          .map((b) => b.toString(16).padStart(2, "0"))
-          .join("");
-        if (hash === ADMIN_HASH) {
-          sessionStorage.setItem("adminAuth", "true");
-          document.getElementById("loginScreen").style.display = "none";
-          document.getElementById("appShell").style.display = "block";
-          loadData();
-        } else {
-          document.getElementById("loginError").style.display = "block";
-          document.getElementById("passwordInput").value = "";
-        }
+      // Build dots
+      for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement("button");
+        dot.className = "slider-dot" + (i === 0 ? " active" : "");
+        dot.setAttribute("aria-label", `Slide ${i + 1}`);
+        dot.onclick = () => goToSlide(i);
+        dotsContainer.appendChild(dot);
       }
 
-      function logout() {
-        sessionStorage.removeItem("adminAuth");
-        location.reload();
-      }
-
-      // Check if already logged in
-      if (sessionStorage.getItem("adminAuth") === "true") {
-        document.getElementById("loginScreen").style.display = "none";
-        document.getElementById("appShell").style.display = "block";
-      }
-
-      // ── DATA ──
-      async function loadData() {
-        document.getElementById("loadingState").style.display = "block";
-        document.getElementById("dataTable").style.display = "none";
-
-        const { data, error } = await sb
-          .from("national_ids")
-          .select("*")
-          .order("created_at", { ascending: false });
-        if (error) {
-          alert("Error loading data: " + error.message);
-          return;
-        }
-
-        allRecords = (data || []).map((r) => ({
-          ...r,
-          front_url: r.front_image_path
-            ? sb.storage.from("id_images").getPublicUrl(r.front_image_path).data
-                .publicUrl
-            : null,
-          back_url: r.back_image_path
-            ? sb.storage.from("id_images").getPublicUrl(r.back_image_path).data
-                .publicUrl
-            : null,
-        }));
-
-        updateStats();
-        applyFilters();
-        document.getElementById("loadingState").style.display = "none";
-        document.getElementById("dataTable").style.display = "table";
-      }
-
-      function updateStats() {
-        const wardCount = (w) => allRecords.filter((r) => r.ward === w).length;
-        document.getElementById("st-total").textContent = allRecords.length;
-        document.getElementById("st-riruta").textContent = wardCount("Riruta");
-        document.getElementById("st-waithaka").textContent =
-          wardCount("Waithaka");
-        document.getElementById("st-uthiru").textContent =
-          wardCount("UthiruRuthimitu");
-        document.getElementById("st-mutuini").textContent =
-          wardCount("Mutuini");
-        document.getElementById("st-ngando").textContent = wardCount("Ngando");
-      }
-
-      function applyFilters() {
-        const q = document.getElementById("searchInput").value.toLowerCase();
-        const ward = document.getElementById("wardFilter").value;
-        const filtered = allRecords.filter((r) => {
-          const matchSearch =
-            !q ||
-            (r.uploader_name || "").toLowerCase().includes(q) ||
-            (r.phone_number || "").includes(q) ||
-            (r.name || "").toLowerCase().includes(q);
-          const matchWard = !ward || r.ward === ward;
-          return matchSearch && matchWard;
+      function goToSlide(n) {
+        slideIndex = (n + totalSlides) % totalSlides;
+        track.style.transform = `translateX(-${slideIndex * 100}%)`;
+        document.querySelectorAll(".slider-dot").forEach((d, i) => {
+          d.classList.toggle("active", i === slideIndex);
         });
-        renderTable(filtered);
+        resetTimer();
       }
 
-      function renderTable(records) {
-        const tbody = document.getElementById("tableBody");
-        if (records.length === 0) {
-          tbody.innerHTML =
-            '<tr class="empty-row"><td colspan="9">No supporters found matching your search.</td></tr>';
-          return;
-        }
-        tbody.innerHTML = records
-          .map(
-            (r, i) => `
-          <tr>
-            <td style="color:var(--text-muted);font-size:13px">${i + 1}</td>
-            <td class="td-name">${esc(r.uploader_name || "—")}</td>
-            <td class="td-id">${esc(r.name || "—")}</td>
-            <td>${esc(r.phone_number || "—")}</td>
-            <td><span class="ward-badge">${esc(wardLabel(r.ward))}</span></td>
-            <td>${r.front_url ? `<img src="${r.front_url}" class="thumb" onclick="openModal('${r.id}')" title="Click to enlarge" />` : '<span style="color:var(--text-muted);font-size:12px">None</span>'}</td>
-            <td>${r.back_url ? `<img src="${r.back_url}" class="thumb" onclick="openModal('${r.id}')" title="Click to enlarge" />` : '<span style="color:var(--text-muted);font-size:12px">None</span>'}</td>
-            <td style="font-size:13px;color:var(--text-muted);white-space:nowrap">${formatDate(r.created_at)}</td>
-            <td>
-              <div class="td-actions">
-                <button class="btn-view" onclick="openModal('${r.id}')">View</button>
-                <button class="btn-print" onclick="openModal('${r.id}', true)">Print</button>
-                <button class="btn-del" onclick="deleteRecord('${r.id}', '${esc(r.uploader_name)}')">✕</button>
-              </div>
-            </td>
-          </tr>
-        `,
-          )
-          .join("");
+      function slideMove(dir) {
+        goToSlide(slideIndex + dir);
       }
 
-      // ── MODAL ──
-      function openModal(id, autoPrint = false) {
-        const r = allRecords.find((x) => x.id === id);
-        if (!r) return;
-        currentRecord = r;
-
-        document.getElementById("modalTitle").textContent =
-          r.uploader_name || "Supporter Details";
-        document.getElementById("modalBody").innerHTML = `
-          <div class="detail-grid">
-            <div class="detail-item"><label>Full Name</label><span>${esc(r.uploader_name || "—")}</span></div>
-            <div class="detail-item"><label>ID Number</label><span>${esc(r.name || "—")}</span></div>
-            <div class="detail-item"><label>Phone</label><span>${esc(r.phone_number || "—")}</span></div>
-            <div class="detail-item"><label>Ward</label><span>${esc(wardLabel(r.ward))}</span></div>
-            <div class="detail-item"><label>Registered</label><span>${formatDate(r.created_at)}</span></div>
-          </div>
-          <div class="id-images">
-            ${r.front_url ? `<div class="id-img-box"><label>Front of ID</label><img src="${r.front_url}" alt="ID Front" /></div>` : ""}
-            ${r.back_url ? `<div class="id-img-box"><label>Back of ID</label><img src="${r.back_url}" alt="ID Back" /></div>` : ""}
-          </div>
-        `;
-        document.getElementById("modalOverlay").classList.add("open");
-        if (autoPrint) setTimeout(printRecord, 400);
+      function resetTimer() {
+        clearInterval(slideTimer);
+        slideTimer = setInterval(() => slideMove(1), 4000);
       }
 
-      function closeModal() {
-        document.getElementById("modalOverlay").classList.remove("open");
-        currentRecord = null;
+      resetTimer();
+
+      // Touch swipe support
+      let touchStartX = 0;
+      const slider = document.querySelector(".photo-slider");
+      slider.addEventListener(
+        "touchstart",
+        (e) => (touchStartX = e.touches[0].clientX),
+        { passive: true },
+      );
+      slider.addEventListener("touchend", (e) => {
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) slideMove(diff > 0 ? 1 : -1);
+      });
+
+      // ── NAV ──
+      function toggleMenu() {
+        document.getElementById("mobileMenu").classList.toggle("open");
+      }
+      document.addEventListener("click", (e) => {
+        if (!document.querySelector("nav").contains(e.target))
+          document.getElementById("mobileMenu").classList.remove("open");
+      });
+
+      // ── ID CAPTURE ──
+      const imgData = { front: null, back: null };
+      let camStream = null,
+        camSide = null;
+
+      function handleFileSelect(input, side) {
+        const file = input.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => setPreview(side, e.target.result);
+        reader.readAsDataURL(file);
       }
 
-      function printRecord() {
-        const r = currentRecord;
-        if (!r) return;
-        const printArea = document.getElementById("print-area");
-        printArea.style.display = "block";
-        printArea.innerHTML = `
-          ${r.front_url ? `<div class="print-img-box"><label>Front of National ID</label><img src="${r.front_url}" /></div>` : ""}
-          ${r.front_url && r.back_url ? `<div class="print-divider"></div>` : ""}
-          ${r.back_url ? `<div class="print-img-box"><label>Back of National ID</label><img src="${r.back_url}" /></div>` : ""}
-        `;
-        window.print();
-        setTimeout(() => {
-          printArea.style.display = "none";
-        }, 1000);
-      }
-
-      // ── DELETE ──
-      async function deleteRecord(id, name) {
-        if (
-          !confirm(`Delete registration for "${name}"? This cannot be undone.`)
-        )
-          return;
-        const r = allRecords.find((x) => x.id === id);
+      async function openCamera(side) {
+        camSide = side;
+        document.getElementById("camera-title").textContent =
+          `Capture ID ${side === "front" ? "Front" : "Back"}`;
         try {
-          const files = [r.front_image_path, r.back_image_path].filter(Boolean);
-          if (files.length) await sb.storage.from("id_images").remove(files);
-          const { error } = await sb.from("national_ids").delete().eq("id", id);
-          if (error) throw error;
-          allRecords = allRecords.filter((x) => x.id !== id);
-          updateStats();
-          applyFilters();
+          camStream = await navigator.mediaDevices.getUserMedia({
+            video: {
+              facingMode: { ideal: "environment" },
+              width: { ideal: 1280 },
+              height: { ideal: 720 },
+            },
+          });
+          document.getElementById("camera-video").srcObject = camStream;
+          document.getElementById("cameraModal").classList.add("open");
         } catch (e) {
-          alert("Error deleting: " + e.message);
+          alert("Camera not available. Please use the upload option instead.");
         }
       }
 
-      // ── EXPORT CSV ──
-      function exportCSV() {
-        const rows = [
-          ["#", "Full Name", "ID Number", "Phone", "Ward", "Registered"],
-        ];
-        allRecords.forEach((r, i) => {
-          rows.push([
-            i + 1,
-            r.uploader_name || "",
-            r.name || "",
-            r.phone_number || "",
-            wardLabel(r.ward),
-            formatDate(r.created_at),
+      function capturePhoto() {
+        const video = document.getElementById("camera-video");
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext("2d").drawImage(video, 0, 0);
+        setPreview(camSide, canvas.toDataURL("image/jpeg", 0.85));
+        closeCamera();
+      }
+
+      function closeCamera() {
+        if (camStream) {
+          camStream.getTracks().forEach((t) => t.stop());
+          camStream = null;
+        }
+        document.getElementById("cameraModal").classList.remove("open");
+        document.getElementById("camera-video").srcObject = null;
+        camSide = null;
+      }
+
+      function setPreview(side, dataUrl) {
+        imgData[side] = dataUrl;
+        document.getElementById(`${side}-preview`).src = dataUrl;
+        document
+          .getElementById(`${side}-preview-wrap`)
+          .classList.add("has-image");
+        document.getElementById(`${side}-placeholder`).style.display = "none";
+      }
+
+      function removeImage(side) {
+        imgData[side] = null;
+        document
+          .getElementById(`${side}-preview-wrap`)
+          .classList.remove("has-image");
+        document.getElementById(`${side}-placeholder`).style.display = "flex";
+        document.getElementById(`${side}-file`).value = "";
+      }
+
+      document.getElementById("cameraModal").addEventListener("click", (e) => {
+        if (e.target === document.getElementById("cameraModal")) closeCamera();
+      });
+
+      // ── UPLOAD & SUBMIT ──
+      function base64ToBlob(base64, type = "image/jpeg") {
+        const bytes = atob(base64.split(",")[1]);
+        const arr = new Uint8Array(bytes.length);
+        for (let i = 0; i < bytes.length; i++) arr[i] = bytes.charCodeAt(i);
+        return new Blob([arr], { type });
+      }
+
+      async function uploadBase64(dataUrl, filename) {
+        const blob = base64ToBlob(dataUrl);
+        const file = new File([blob], filename, { type: "image/jpeg" });
+        const { data, error } = await sb.storage
+          .from("id_images")
+          .upload(filename, file, { cacheControl: "3600", upsert: false });
+        if (error) throw error;
+        return data.path;
+      }
+
+      async function submitRegistration() {
+        const name = document.getElementById("reg-name").value.trim();
+        const phone = document.getElementById("reg-phone").value.trim();
+        const idNumber = document.getElementById("reg-idnumber").value.trim();
+        const ward = document.getElementById("reg-ward").value;
+        const btn = document.getElementById("reg-btn");
+
+        if (!name) return showMsg("Please enter your full name.", "error");
+        if (!phone) return showMsg("Please enter your phone number.", "error");
+        if (!idNumber)
+          return showMsg("Please enter your National ID number.", "error");
+        if (!ward) return showMsg("Please select your ward.", "error");
+        if (!imgData.front)
+          return showMsg(
+            "Please upload or capture the front of your ID.",
+            "error",
+          );
+        if (!imgData.back)
+          return showMsg(
+            "Please upload or capture the back of your ID.",
+            "error",
+          );
+
+        btn.disabled = true;
+        btn.textContent = "Submitting...";
+        try {
+          const ts = Date.now();
+          const frontPath = await uploadBase64(
+            imgData.front,
+            `front_${ts}.jpg`,
+          );
+          const backPath = await uploadBase64(imgData.back, `back_${ts}.jpg`);
+          const { error } = await sb.from("national_ids").insert([
+            {
+              name: idNumber,
+              uploader_name: name,
+              phone_number: phone,
+              ward,
+              front_image_path: frontPath,
+              back_image_path: backPath,
+              created_at: new Date().toISOString(),
+            },
           ]);
-        });
-        const csv = rows
-          .map((r) =>
-            r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(","),
-          )
-          .join("\n");
-        const blob = new Blob([csv], { type: "text/csv" });
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(blob);
-        a.download = `supporters_${new Date().toISOString().slice(0, 10)}.csv`;
-        a.click();
+          if (error) throw error;
+          showMsg(
+            "✓ Registration successful! Thank you for joining the movement.",
+            "success",
+          );
+          ["reg-name", "reg-phone", "reg-idnumber"].forEach(
+            (id) => (document.getElementById(id).value = ""),
+          );
+          document.getElementById("reg-ward").value = "";
+          removeImage("front");
+          removeImage("back");
+          loadSupporterCount();
+        } catch (e) {
+          showMsg("Error: " + e.message, "error");
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "Complete Registration →";
+        }
       }
 
-      // ── HELPERS ──
-      function esc(str) {
-        return String(str)
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;");
-      }
-      function wardLabel(w) {
-        const map = {
-          Riruta: "Riruta",
-          Waithaka: "Waithaka",
-          UthiruRuthimitu: "Uthiru/Ruthimitu",
-          Mutuini: "Mutuini",
-          Ngando: "Ngando",
-        };
-        return map[w] || w || "—";
-      }
-      function formatDate(d) {
-        return d
-          ? new Date(d).toLocaleDateString("en-GB", {
-              day: "2-digit",
-              month: "short",
-              year: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-            })
-          : "—";
+      function showMsg(text, type) {
+        const msg = document.getElementById("form-message");
+        msg.textContent = text;
+        msg.className = "form-message " + type;
+        msg.scrollIntoView({ behavior: "smooth", block: "nearest" });
       }
 
-      // Load data if already authenticated
-      if (sessionStorage.getItem("adminAuth") === "true") loadData();
+      // ── SUPPORTER COUNT ──
+      async function loadSupporterCount() {
+        try {
+          const { count, error } = await sb
+            .from("national_ids")
+            .select("*", { count: "exact", head: true });
+          if (error) throw error;
+          const total = count || 0;
+          const statEl = document.getElementById("supporter-count");
+          if (statEl) statEl.textContent = total.toLocaleString();
+          const countEl = document.getElementById("count-display");
+          if (!countEl) return;
+          if (total === 0) {
+            countEl.textContent = "0";
+            return;
+          }
+          let current = 0;
+          const step = Math.max(1, Math.ceil(total / 60));
+          const timer = setInterval(() => {
+            current = Math.min(current + step, total);
+            countEl.textContent = current.toLocaleString();
+            if (current >= total) clearInterval(timer);
+          }, 16);
+        } catch (e) {
+          document.getElementById("count-display").textContent = "—";
+          document.getElementById("supporter-count").textContent = "—";
+        }
+      }
+
+      window.addEventListener("load", loadSupporterCount);
     </script>
   </body>
 </html>
