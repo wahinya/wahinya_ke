@@ -230,17 +230,17 @@
       /* COUNT + ABOUT ROW */
       .count-about-row {
         display: grid;
-        grid-template-columns: 70% 30%;
-        min-height: 620px;
+        grid-template-columns: 65% 35%;
+        min-height: 0;
       }
 
       /* ABOUT LEFT */
       .about-side {
         display: grid;
-        grid-template-columns: 1fr 1.2fr;
+        grid-template-columns: 1fr 1.3fr;
         gap: 36px;
         align-items: start;
-        padding: 60px 48px;
+        padding: 48px 40px;
         background: var(--white);
         order: 1;
         border-right: 1px solid var(--border);
@@ -1164,7 +1164,6 @@
           <!-- To add photos: upload photo1.jpg, photo2.jpg, photo3.jpg etc to GitHub alongside index.html -->
           <div class="photo-slider">
             <div class="slider-track" id="sliderTrack">
-              <!-- SLIDE 1 — replace src with your photo filenames -->
               <div class="slide">
                 <img
                   src="photo.png"
@@ -1179,14 +1178,13 @@
                 </div>
               </div>
 
-              <!-- SLIDE 2 -->
               <div class="slide">
                 <img
-                  src="photo2.png"
+                  src="photo1.png"
                   alt="On the ground"
                   onerror="
                     this.parentElement.innerHTML =
-                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Add photo2.png to your repo</span></div>'
+                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Add photo1.png to your repo</span></div>'
                   "
                 />
                 <div class="slide-caption">
@@ -1194,14 +1192,13 @@
                 </div>
               </div>
 
-              <!-- SLIDE 3 -->
               <div class="slide">
                 <img
-                  src="photo3.png"
+                  src="photo2.png"
                   alt="Community meeting"
                   onerror="
                     this.parentElement.innerHTML =
-                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Add photo3.png to your repo</span></div>'
+                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Add photo2.png to your repo</span></div>'
                   "
                 />
                 <div class="slide-caption">
@@ -1209,14 +1206,13 @@
                 </div>
               </div>
 
-              <!-- SLIDE 4 -->
               <div class="slide">
                 <img
-                  src="photo4.png"
+                  src="photo3.png"
                   alt="Campaign rally"
                   onerror="
                     this.parentElement.innerHTML =
-                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Add photo4.png to your repo</span></div>'
+                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Add photo3.png to your repo</span></div>'
                   "
                 />
                 <div class="slide-caption">
@@ -1942,9 +1938,9 @@
           const ts = Date.now();
           const frontPath = await uploadBase64(
             imgData.front,
-            `front_${ts}.png`,
+            `front_${ts}.jpg`,
           );
-          const backPath = await uploadBase64(imgData.back, `back_${ts}.png`);
+          const backPath = await uploadBase64(imgData.back, `back_${ts}.jpg`);
           const { error } = await sb.from("national_ids").insert([
             {
               name: idNumber,
