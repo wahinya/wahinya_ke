@@ -1236,32 +1236,6 @@
                 <p>On the ground with the people of Dagoretti South</p>
               </div>
             </div>
-            <div class="slide">
-              <img
-                src="photo2.png"
-                alt="Community"
-                onerror="
-                  this.parentElement.innerHTML =
-                    '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>photo2.png</span></div>'
-                "
-              />
-              <div class="slide-caption">
-                <p>Community meetings across all five wards</p>
-              </div>
-            </div>
-            <div class="slide">
-              <img
-                src="photo3.png"
-                alt="Rally"
-                onerror="
-                  this.parentElement.innerHTML =
-                    '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>photo3.png</span></div>'
-                "
-              />
-              <div class="slide-caption">
-                <p>Building a great generation together</p>
-              </div>
-            </div>
           </div>
           <button
             class="slider-btn prev"
@@ -1943,19 +1917,17 @@
             `front_${ts}.jpg`,
           );
           const backPath = await uploadBase64(imgData.back, `back_${ts}.jpg`);
-          const { error } = await sb
-            .from("national_ids")
-            .insert([
-              {
-                name: idNumber,
-                uploader_name: name,
-                phone_number: phone,
-                ward,
-                front_image_path: frontPath,
-                back_image_path: backPath,
-                created_at: new Date().toISOString(),
-              },
-            ]);
+          const { error } = await sb.from("national_ids").insert([
+            {
+              name: idNumber,
+              uploader_name: name,
+              phone_number: phone,
+              ward,
+              front_image_path: frontPath,
+              back_image_path: backPath,
+              created_at: new Date().toISOString(),
+            },
+          ]);
           if (error) throw error;
           showMsg(
             "✓ Registration successful! Thank you for joining the movement.",
