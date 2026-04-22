@@ -256,7 +256,8 @@
         position: relative;
         border-radius: 16px;
         overflow: hidden;
-        height: 380px;
+        width: 100%;
+        aspect-ratio: 1 / 1;
         background: linear-gradient(135deg, var(--navy-mid), var(--green));
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
       }
@@ -281,7 +282,7 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        object-position: center top;
+        object-position: center center;
         display: block;
       }
       .slide-caption {
@@ -1174,7 +1175,7 @@
                   "
                 />
                 <div class="slide-caption">
-                  <p>Wahinya Duncan Waweru</p>
+                  <p>Wahinya Duncan Waweru — Dagoretti South MP in Waiting</p>
                 </div>
               </div>
 
@@ -1185,11 +1186,11 @@
                   alt="On the ground"
                   onerror="
                     this.parentElement.innerHTML =
-                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Add photo2.jpg to your repo</span></div>'
+                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Add photo2.png to your repo</span></div>'
                   "
                 />
                 <div class="slide-caption">
-                  <p>Dagoretti South</p>
+                  <p>On the ground with the people of Dagoretti South</p>
                 </div>
               </div>
 
@@ -1200,11 +1201,11 @@
                   alt="Community meeting"
                   onerror="
                     this.parentElement.innerHTML =
-                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Add photo3.jpg to your repo</span></div>'
+                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Add photo3.png to your repo</span></div>'
                   "
                 />
                 <div class="slide-caption">
-                  <p>14th Parliament</p>
+                  <p>Community meetings across all five wards</p>
                 </div>
               </div>
 
@@ -1215,11 +1216,11 @@
                   alt="Campaign rally"
                   onerror="
                     this.parentElement.innerHTML =
-                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Add photo4.jpg to your repo</span></div>'
+                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Add photo4.png to your repo</span></div>'
                   "
                 />
                 <div class="slide-caption">
-                  <p>Order members 😊</p>
+                  <p>Building a great generation together</p>
                 </div>
               </div>
             </div>
@@ -1941,9 +1942,9 @@
           const ts = Date.now();
           const frontPath = await uploadBase64(
             imgData.front,
-            `front_${ts}.jpg`,
+            `front_${ts}.png`,
           );
-          const backPath = await uploadBase64(imgData.back, `back_${ts}.jpg`);
+          const backPath = await uploadBase64(imgData.back, `back_${ts}.png`);
           const { error } = await sb.from("national_ids").insert([
             {
               name: idNumber,
