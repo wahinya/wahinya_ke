@@ -47,6 +47,7 @@
         line-height: 1.6;
       }
 
+      /* NAV */
       nav {
         background: var(--navy);
         padding: 14px 24px;
@@ -142,6 +143,7 @@
         border-bottom: none;
       }
 
+      /* HERO */
       .hero {
         background: linear-gradient(
           135deg,
@@ -227,55 +229,48 @@
         transform: translateY(-1px);
       }
 
-      /* COUNT + ABOUT ROW */
+      /* ── 3-COLUMN ROW ── */
       .count-about-row {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        min-height: 620px;
+        grid-template-columns: 1fr 1fr 360px;
+        min-height: 560px;
+        border-bottom: 1px solid var(--border);
       }
 
-      /* ABOUT LEFT */
-      .about-side {
-        display: grid;
-        grid-template-columns: 1fr 1.2fr;
-        gap: 36px;
-        align-items: start;
-        padding: 60px 48px;
-        background: var(--white);
+      /* SLIDER — LEFT */
+      .slider-column {
         order: 1;
-        border-right: 1px solid var(--border);
-      }
-
-      /* PHOTO SLIDER */
-      .photo-slider-wrap {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+        position: relative;
+        overflow: hidden;
+        min-height: 520px;
       }
       .photo-slider {
-        position: relative;
-        border-radius: 16px;
+        position: absolute;
+        inset: 0;
         overflow: hidden;
-        height: 380px;
         background: linear-gradient(135deg, var(--navy-mid), var(--green));
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
       }
       .slider-track {
         display: flex;
         height: 100%;
+        width: 100%;
         transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        flex-wrap: nowrap;
       }
       .slide {
+        width: 100%;
         min-width: 100%;
+        max-width: 100%;
         height: 100%;
         position: relative;
-        flex-shrink: 0;
+        flex: 0 0 100%;
+        overflow: hidden;
       }
       .slide img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        object-position: top center;
+        object-position: center center;
         display: block;
       }
       .slide-caption {
@@ -283,8 +278,8 @@
         bottom: 0;
         left: 0;
         right: 0;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-        padding: 20px 16px 14px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent);
+        padding: 36px 20px 16px;
       }
       .slide-caption p {
         color: #fff;
@@ -298,19 +293,17 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 8px;
+        gap: 10px;
         color: rgba(255, 255, 255, 0.5);
         font-size: 13px;
       }
       .slide-placeholder svg {
-        width: 36px;
-        height: 36px;
-        stroke: rgba(255, 255, 255, 0.4);
+        width: 40px;
+        height: 40px;
+        stroke: rgba(255, 255, 255, 0.35);
         fill: none;
         stroke-width: 1.5;
       }
-
-      /* Slider Controls */
       .slider-btn {
         position: absolute;
         top: 50%;
@@ -318,8 +311,8 @@
         background: rgba(255, 255, 255, 0.9);
         border: none;
         border-radius: 50%;
-        width: 36px;
-        height: 36px;
+        width: 38px;
+        height: 38px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -328,11 +321,11 @@
         transition:
           background 0.2s,
           transform 0.2s;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
       }
       .slider-btn:hover {
         background: #fff;
-        transform: translateY(-50%) scale(1.05);
+        transform: translateY(-50%) scale(1.08);
       }
       .slider-btn svg {
         width: 16px;
@@ -344,22 +337,25 @@
         stroke-linejoin: round;
       }
       .slider-btn.prev {
-        left: 10px;
+        left: 14px;
       }
       .slider-btn.next {
-        right: 10px;
+        right: 14px;
       }
       .slider-dots {
+        position: absolute;
+        bottom: 14px;
+        left: 50%;
+        transform: translateX(-50%);
         display: flex;
-        justify-content: center;
         gap: 6px;
-        padding: 8px 0 2px;
+        z-index: 10;
       }
       .slider-dot {
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background: var(--gray-200);
+        background: rgba(255, 255, 255, 0.45);
         border: none;
         cursor: pointer;
         padding: 0;
@@ -368,19 +364,55 @@
           width 0.2s;
       }
       .slider-dot.active {
-        background: var(--green);
+        background: #fff;
         width: 22px;
         border-radius: 4px;
       }
 
+      /* ABOUT — MIDDLE */
+      .about-side {
+        order: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 52px 44px;
+        background: var(--white);
+        border-left: 1px solid var(--border);
+        border-right: 1px solid var(--border);
+        gap: 18px;
+      }
+      .candidate-tag {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid var(--border);
+      }
+      .candidate-avatar {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--navy-mid), var(--green));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 800;
+        color: #fff;
+        flex-shrink: 0;
+      }
+      .candidate-info {
+        display: flex;
+        flex-direction: column;
+      }
       .candidate-name {
-        font-size: 18px;
+        font-size: 15px;
         font-weight: 800;
         color: var(--gray-900);
-        margin-top: 4px;
+        line-height: 1.2;
       }
       .candidate-title {
-        font-size: 13px;
+        font-size: 12px;
         color: var(--green-dark);
         font-weight: 600;
         margin-top: 2px;
@@ -388,43 +420,42 @@
       .about-content {
         display: flex;
         flex-direction: column;
-        gap: 14px;
-        padding-top: 4px;
+        gap: 12px;
       }
       .section-label {
-        font-size: 12px;
+        font-size: 11px;
         font-weight: 700;
         color: var(--green);
         text-transform: uppercase;
-        letter-spacing: 1.8px;
+        letter-spacing: 2px;
       }
       .section-title {
-        font-size: clamp(22px, 2.8vw, 30px);
+        font-size: clamp(20px, 2vw, 26px);
         font-weight: 800;
         color: var(--gray-900);
         line-height: 1.25;
         letter-spacing: -0.3px;
       }
       .section-desc {
-        font-size: 15px;
+        font-size: 14px;
         color: var(--text-muted);
         line-height: 1.75;
       }
       .about-points {
         display: flex;
         flex-direction: column;
-        gap: 14px;
+        gap: 10px;
         margin-top: 4px;
       }
       .about-point {
         display: flex;
-        gap: 12px;
+        gap: 10px;
         align-items: flex-start;
       }
       .check-circle {
-        width: 22px;
-        height: 22px;
-        min-width: 22px;
+        width: 20px;
+        height: 20px;
+        min-width: 20px;
         border-radius: 50%;
         background: var(--green-light);
         display: flex;
@@ -433,8 +464,8 @@
         margin-top: 2px;
       }
       .check-circle svg {
-        width: 12px;
-        height: 12px;
+        width: 10px;
+        height: 10px;
         stroke: var(--green-dark);
         fill: none;
         stroke-width: 2.5;
@@ -442,79 +473,79 @@
         stroke-linejoin: round;
       }
       .about-point p {
-        font-size: 14px;
+        font-size: 13px;
         color: var(--text-muted);
         line-height: 1.6;
       }
 
-      /* COUNT RIGHT */
+      /* COUNT — RIGHT */
       .count-section {
-        background: var(--gray-100);
-        padding: 60px 40px;
-        text-align: center;
+        order: 3;
+        background: var(--navy);
+        padding: 48px 32px;
         display: flex;
         align-items: center;
         justify-content: center;
-        order: 2;
+        text-align: center;
       }
       .count-inner {
-        background: var(--white);
-        border: 3px solid #111;
-        border-radius: 8px;
-        padding: 44px 36px;
         width: 100%;
-        max-width: 420px;
       }
       .count-question {
-        font-size: 19px;
-        font-weight: 700;
+        font-size: 14px;
+        font-weight: 600;
         font-style: italic;
-        color: #111;
+        color: rgba(255, 255, 255, 0.55);
         margin-bottom: 6px;
         font-family: Georgia, serif;
       }
       .count-headline {
-        font-size: clamp(24px, 3.5vw, 36px);
+        font-size: clamp(18px, 2vw, 26px);
         font-weight: 900;
-        color: #111;
-        letter-spacing: -0.5px;
+        color: var(--white);
+        letter-spacing: -0.3px;
         margin-bottom: 20px;
-        line-height: 1.1;
+        line-height: 1.15;
       }
       .count-number {
-        font-size: clamp(56px, 8vw, 88px);
+        font-size: clamp(64px, 7vw, 96px);
         font-weight: 900;
-        background: linear-gradient(135deg, #185fa5, #1d9e75);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        color: var(--green-mid);
         line-height: 1;
-        margin-bottom: 10px;
+        margin-bottom: 6px;
+      }
+      .count-divider {
+        width: 36px;
+        height: 3px;
+        background: var(--green);
+        border-radius: 2px;
+        margin: 0 auto 12px;
       }
       .count-sub {
-        font-size: 15px;
-        color: var(--text-muted);
-        margin-bottom: 24px;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.5);
+        margin-bottom: 28px;
       }
       .count-btn {
         display: block;
-        background: linear-gradient(135deg, #185fa5, #1d9e75);
+        background: var(--green);
         color: #fff;
-        font-size: 15px;
+        font-size: 13px;
         font-weight: 800;
         letter-spacing: 2px;
-        padding: 14px 24px;
+        padding: 14px 20px;
         border-radius: 6px;
         text-decoration: none;
         transition:
-          opacity 0.2s,
+          background 0.2s,
           transform 0.1s;
       }
       .count-btn:hover {
-        opacity: 0.9;
+        background: var(--green-dark);
         transform: translateY(-1px);
       }
 
+      /* STATS */
       .stats-bar {
         background: var(--navy);
         padding: 40px 24px;
@@ -542,6 +573,7 @@
         font-weight: 500;
       }
 
+      /* SECTIONS */
       .section {
         padding: 72px 24px;
         max-width: 1100px;
@@ -567,6 +599,7 @@
         margin: 0 24px;
       }
 
+      /* PILLARS */
       .pillars-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -619,6 +652,7 @@
         line-height: 1.65;
       }
 
+      /* WARDS */
       .wards-section {
         background: var(--gray-100);
         padding: 72px 24px;
@@ -663,6 +697,7 @@
         font-weight: 500;
       }
 
+      /* REGISTER */
       .register-section {
         background: var(--gray-100);
         padding: 72px 24px;
@@ -713,7 +748,6 @@
       .form-group select:focus {
         border-color: var(--green);
       }
-
       .id-capture {
         border: 1.5px solid var(--gray-200);
         border-radius: var(--radius-sm);
@@ -809,7 +843,6 @@
         fill: none;
         stroke-width: 1.5;
       }
-
       .camera-modal {
         display: none;
         position: fixed;
@@ -910,12 +943,10 @@
         font-size: 15px;
         font-weight: 600;
         cursor: pointer;
-        transition: background 0.2s;
       }
       .btn-cancel-cam:hover {
         background: var(--gray-200);
       }
-
       .form-submit {
         margin-top: 24px;
       }
@@ -957,6 +988,7 @@
         display: block;
       }
 
+      /* CTA */
       .cta-section {
         background: linear-gradient(135deg, var(--navy), var(--navy-mid));
         padding: 80px 24px;
@@ -978,6 +1010,7 @@
         line-height: 1.7;
       }
 
+      /* CONTACT */
       .contact-section {
         padding: 72px 24px;
         max-width: 1100px;
@@ -1033,6 +1066,7 @@
         text-decoration: underline;
       }
 
+      /* FOOTER */
       footer {
         background: #05111f;
         padding: 36px 24px;
@@ -1061,27 +1095,49 @@
         color: var(--green-mid);
       }
 
-      @media (max-width: 900px) {
+      /* RESPONSIVE */
+      @media (max-width: 1024px) {
         .count-about-row {
-          grid-template-columns: 1fr;
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: auto auto;
+        }
+        .slider-column {
+          order: 1;
+          min-height: 400px;
+          grid-column: 1/2;
         }
         .about-side {
-          grid-template-columns: 1fr;
-          padding: 48px 24px;
-          gap: 24px;
-          order: 1;
+          order: 2;
+          grid-column: 2/3;
+          padding: 40px 28px;
+          border-left: 1px solid var(--border);
           border-right: none;
-          border-bottom: 1px solid var(--border);
-        }
-        .photo-slider {
-          height: 260px;
         }
         .count-section {
-          order: 2;
-          padding: 52px 24px;
+          order: 3;
+          grid-column: 1/3;
+          padding: 40px 24px;
         }
       }
       @media (max-width: 768px) {
+        .count-about-row {
+          grid-template-columns: 1fr;
+        }
+        .slider-column {
+          order: 1;
+          min-height: 320px;
+          grid-column: 1;
+        }
+        .about-side {
+          order: 2;
+          grid-column: 1;
+          border-left: none;
+          padding: 36px 20px;
+        }
+        .count-section {
+          order: 3;
+          grid-column: 1;
+        }
         .nav-links {
           display: none;
         }
@@ -1148,104 +1204,92 @@
       </div>
     </section>
 
-    <!-- COUNT + ABOUT ROW -->
+    <!-- 3-COLUMN ROW -->
     <div class="count-about-row">
-      <!-- About — LEFT -->
-      <div class="about-side" id="about">
-        <div class="photo-slider-wrap">
-          <!-- PHOTO SLIDER -->
-          <!-- To add photos: upload photo1.jpg, photo2.jpg, photo3.jpg etc to GitHub alongside index.html -->
-          <div class="photo-slider">
-            <div class="slider-track" id="sliderTrack">
-              <!-- SLIDE 1 — replace src with your photo filenames -->
-              <div class="slide">
-                <img
-                  src="photo.jpg"
-                  alt="Wahinya Duncan Waweru"
-                  onerror="
-                    this.parentElement.innerHTML =
-                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Wahinya Duncan Waweru</span></div>'
-                  "
-                />
-                <div class="slide-caption">
-                  <p>Wahinya Duncan Waweru</p>
-                </div>
-              </div>
-
-              <!-- SLIDE 2 -->
-              <div class="slide">
-                <img
-                  src="photo2.png"
-                  alt="On the ground"
-                  onerror="
-                    this.parentElement.innerHTML =
-                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Add photo2.jpg to your repo</span></div>'
-                  "
-                />
-                <div class="slide-caption">
-                  <p>Wahinya Kwa Bunge</p>
-                </div>
-              </div>
-
-              <!-- SLIDE 3 -->
-              <div class="slide">
-                <img
-                  src="photo3.png"
-                  alt="Community meeting"
-                  onerror="
-                    this.parentElement.innerHTML =
-                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Add photo3.jpg to your repo</span></div>'
-                  "
-                />
-                <div class="slide-caption">
-                  <p>Wahinya Bungeni</p>
-                </div>
-              </div>
-
-              <!-- SLIDE 4 -->
-              <div class="slide">
-                <img
-                  src="photo4.png"
-                  alt="Campaign rally"
-                  onerror="
-                    this.parentElement.innerHTML =
-                      '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>Add photo4.jpg to your repo</span></div>'
-                  "
-                />
-                <div class="slide-caption">
-                  <p>Dagoretti South</p>
-                </div>
+      <!-- SLIDER — LEFT -->
+      <div class="slider-column">
+        <div class="photo-slider">
+          <div class="slider-track" id="sliderTrack">
+            <div class="slide">
+              <img
+                src="photo.png"
+                alt="Wahinya Duncan Waweru"
+                onerror="
+                  this.parentElement.innerHTML =
+                    '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>photo.png</span></div>'
+                "
+              />
+              <div class="slide-caption">
+                <p>Wahinya Duncan Waweru — Dagoretti South MP in Waiting</p>
               </div>
             </div>
-
-            <!-- Prev / Next buttons -->
-            <button
-              class="slider-btn prev"
-              onclick="slideMove(-1)"
-              aria-label="Previous"
-            >
-              <svg viewBox="0 0 24 24">
-                <polyline points="15 18 9 12 15 6" />
-              </svg>
-            </button>
-            <button
-              class="slider-btn next"
-              onclick="slideMove(1)"
-              aria-label="Next"
-            >
-              <svg viewBox="0 0 24 24">
-                <polyline points="9 6 15 12 9 18" />
-              </svg>
-            </button>
+            <div class="slide">
+              <img
+                src="photo1.png"
+                alt="Campaign"
+                onerror="
+                  this.parentElement.innerHTML =
+                    '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>photo1.png</span></div>'
+                "
+              />
+              <div class="slide-caption">
+                <p>On the ground with the people of Dagoretti South</p>
+              </div>
+            </div>
+            <div class="slide">
+              <img
+                src="photo2.png"
+                alt="Community"
+                onerror="
+                  this.parentElement.innerHTML =
+                    '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>photo2.png</span></div>'
+                "
+              />
+              <div class="slide-caption">
+                <p>Community meetings across all five wards</p>
+              </div>
+            </div>
+            <div class="slide">
+              <img
+                src="photo3.png"
+                alt="Rally"
+                onerror="
+                  this.parentElement.innerHTML =
+                    '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>photo3.png</span></div>'
+                "
+              />
+              <div class="slide-caption">
+                <p>Building a great generation together</p>
+              </div>
+            </div>
           </div>
-
-          <!-- Dots -->
+          <button
+            class="slider-btn prev"
+            onclick="slideMove(-1)"
+            aria-label="Previous"
+          >
+            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6" /></svg>
+          </button>
+          <button
+            class="slider-btn next"
+            onclick="slideMove(1)"
+            aria-label="Next"
+          >
+            <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18" /></svg>
+          </button>
           <div class="slider-dots" id="sliderDots"></div>
-
-          <p class="candidate-name">Wahinya Duncan Waweru</p>
-          <p class="candidate-title">Dagoretti South MP in Waiting</p>
         </div>
+      </div>
 
+      <!-- ABOUT — MIDDLE -->
+      <div class="about-side" id="about">
+        <div class="candidate-tag">
+          <div class="candidate-avatar">DW</div>
+          <div class="candidate-info">
+            <span class="candidate-name">Wahinya Duncan Waweru</span>
+            <span class="candidate-title">Dagoretti South MP in Waiting</span>
+          </div>
+        </div>
         <div class="about-content">
           <div class="section-label">About the Candidate</div>
           <h2 class="section-title">
@@ -1256,20 +1300,17 @@
             and someone who is tired of watching our constituency's potential be
             stolen by corruption and bad policies.
           </p>
-          <p class="section-desc" style="margin-top: 10px">
+          <p class="section-desc">
             I grew up in these streets. I built my career here. Every day I see
             brilliant young people with no jobs, roads unfixed for years, and
             leaders who only show up at election time.
           </p>
-          <p class="section-desc" style="margin-top: 10px">
-            As an engineer, I am trained to solve problems — not talk about
-            them. Public money should build real things: classrooms, roads, and
-            opportunities. Not disappear into someone's pocket.
+          <p class="section-desc">
+            As an engineer, I solve problems — not talk about them. Public money
+            should build classrooms, roads, and opportunities. Not disappear
+            into someone's pocket.
           </p>
-          <p
-            class="section-desc"
-            style="margin-top: 10px; font-weight: 700; color: var(--navy)"
-          >
+          <p class="section-desc" style="font-weight: 700; color: var(--navy)">
             This is not about politics. It is about our children's future. And I
             need you standing with me.
           </p>
@@ -1280,10 +1321,7 @@
                   <polyline points="2,6 5,9 10,3" />
                 </svg>
               </div>
-              <p>
-                Engineer with hands-on experience delivering real projects on
-                time and on budget
-              </p>
+              <p>Engineer delivering real projects on time and on budget</p>
             </div>
             <div class="about-point">
               <div class="check-circle">
@@ -1292,8 +1330,8 @@
                 </svg>
               </div>
               <p>
-                Zero tolerance for corruption — every shilling of public funds
-                must be accounted for
+                Zero tolerance for corruption — every shilling must be accounted
+                for
               </p>
             </div>
             <div class="about-point">
@@ -1313,21 +1351,19 @@
                   <polyline points="2,6 5,9 10,3" />
                 </svg>
               </div>
-              <p>
-                A leader who will be present — not just at election time, but
-                every single day
-              </p>
+              <p>A leader present every day — not just at election time</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Count — RIGHT -->
+      <!-- COUNT — RIGHT -->
       <div class="count-section">
         <div class="count-inner">
           <p class="count-question">Sisi Ndio Wahinya</p>
           <h2 class="count-headline">KWANI TUKO WANGAPI?</h2>
           <div class="count-number" id="count-display">...</div>
+          <div class="count-divider"></div>
           <p class="count-sub">people have joined so far!</p>
           <a href="#register" class="count-btn">COUNT ME IN</a>
         </div>
@@ -1489,20 +1525,24 @@
         <div class="form-card">
           <div class="form-grid">
             <div class="form-group">
-              <label>Full Name <span>*</span></label>
-              <input type="text" id="reg-name" placeholder="e.g., John Kamau" />
+              <label>Full Name <span>*</span></label
+              ><input
+                type="text"
+                id="reg-name"
+                placeholder="e.g., John Kamau"
+              />
             </div>
             <div class="form-group">
-              <label>Phone Number <span>*</span></label>
-              <input
+              <label>Phone Number <span>*</span></label
+              ><input
                 type="tel"
                 id="reg-phone"
                 placeholder="e.g., +254712345678"
               />
             </div>
             <div class="form-group">
-              <label>National ID Number <span>*</span></label>
-              <input
+              <label>National ID Number <span>*</span></label
+              ><input
                 type="text"
                 id="reg-idnumber"
                 placeholder="e.g., 12345678"
@@ -1523,20 +1563,17 @@
               <label>ID Front Side <span>*</span></label>
               <div class="id-capture">
                 <div class="id-capture-btns">
-                  <label class="id-capture-btn">
-                    <svg viewBox="0 0 24 24">
+                  <label class="id-capture-btn"
+                    ><svg viewBox="0 0 24 24">
                       <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
                       <polyline points="17 8 12 3 7 8" />
-                      <line x1="12" y1="3" x2="12" y2="15" />
-                    </svg>
-                    Upload File
-                    <input
+                      <line x1="12" y1="3" x2="12" y2="15" /></svg
+                    >Upload File<input
                       type="file"
                       id="front-file"
                       accept="image/*"
                       onchange="handleFileSelect(this, 'front')"
-                    />
-                  </label>
+                  /></label>
                   <button
                     type="button"
                     class="id-capture-btn"
@@ -1546,21 +1583,18 @@
                       <path
                         d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"
                       />
-                      <circle cx="12" cy="13" r="4" />
-                    </svg>
-                    Use Camera
+                      <circle cx="12" cy="13" r="4" /></svg
+                    >Use Camera
                   </button>
                 </div>
                 <div class="id-placeholder" id="front-placeholder">
                   <svg viewBox="0 0 24 24">
                     <rect x="2" y="5" width="20" height="14" rx="2" />
-                    <line x1="2" y1="10" x2="22" y2="10" />
-                  </svg>
-                  <span>Upload or capture front of ID</span>
+                    <line x1="2" y1="10" x2="22" y2="10" /></svg
+                  ><span>Upload or capture front of ID</span>
                 </div>
                 <div class="id-preview-wrap" id="front-preview-wrap">
-                  <img id="front-preview" alt="Front ID" />
-                  <button
+                  <img id="front-preview" alt="Front ID" /><button
                     class="id-preview-remove"
                     onclick="removeImage('front')"
                     title="Remove"
@@ -1574,20 +1608,17 @@
               <label>ID Back Side <span>*</span></label>
               <div class="id-capture">
                 <div class="id-capture-btns">
-                  <label class="id-capture-btn">
-                    <svg viewBox="0 0 24 24">
+                  <label class="id-capture-btn"
+                    ><svg viewBox="0 0 24 24">
                       <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
                       <polyline points="17 8 12 3 7 8" />
-                      <line x1="12" y1="3" x2="12" y2="15" />
-                    </svg>
-                    Upload File
-                    <input
+                      <line x1="12" y1="3" x2="12" y2="15" /></svg
+                    >Upload File<input
                       type="file"
                       id="back-file"
                       accept="image/*"
                       onchange="handleFileSelect(this, 'back')"
-                    />
-                  </label>
+                  /></label>
                   <button
                     type="button"
                     class="id-capture-btn"
@@ -1597,21 +1628,18 @@
                       <path
                         d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"
                       />
-                      <circle cx="12" cy="13" r="4" />
-                    </svg>
-                    Use Camera
+                      <circle cx="12" cy="13" r="4" /></svg
+                    >Use Camera
                   </button>
                 </div>
                 <div class="id-placeholder" id="back-placeholder">
                   <svg viewBox="0 0 24 24">
                     <rect x="2" y="5" width="20" height="14" rx="2" />
-                    <line x1="2" y1="10" x2="22" y2="10" />
-                  </svg>
-                  <span>Upload or capture back of ID</span>
+                    <line x1="2" y1="10" x2="22" y2="10" /></svg
+                  ><span>Upload or capture back of ID</span>
                 </div>
                 <div class="id-preview-wrap" id="back-preview-wrap">
-                  <img id="back-preview" alt="Back ID" />
-                  <button
+                  <img id="back-preview" alt="Back ID" /><button
                     class="id-preview-remove"
                     onclick="removeImage('back')"
                     title="Remove"
@@ -1636,7 +1664,7 @@
     <div class="camera-modal" id="cameraModal">
       <div class="camera-box">
         <div class="camera-header">
-          <h3 id="camera-title">Capture ID Front</h3>
+          <h3 id="camera-title">Capture ID</h3>
           <button class="camera-close" onclick="closeCamera()">✕</button>
         </div>
         <div class="camera-video-wrap">
@@ -1647,9 +1675,8 @@
           <button class="btn-capture" onclick="capturePhoto()">
             <svg viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="10" />
-              <circle cx="12" cy="12" r="4" fill="currentColor" />
-            </svg>
-            Capture
+              <circle cx="12" cy="12" r="4" fill="currentColor" /></svg
+            >Capture
           </button>
           <button class="btn-cancel-cam" onclick="closeCamera()">Cancel</button>
         </div>
@@ -1732,12 +1759,9 @@
     <!-- FOOTER -->
     <footer>
       <div class="footer-links">
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#vision">Vision</a>
-        <a href="#wards">Wards</a>
-        <a href="#register">Register</a>
-        <a href="#contact">Contact</a>
+        <a href="#home">Home</a><a href="#about">About</a
+        ><a href="#vision">Vision</a> <a href="#wards">Wards</a
+        ><a href="#register">Register</a><a href="#contact">Contact</a>
       </div>
       <p>
         <strong>Wahinya Duncan Waweru</strong> — Building a Great Generation
@@ -1756,14 +1780,12 @@
       const { createClient } = supabase;
       const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-      // ── PHOTO SLIDER ──
-      let slideIndex = 0;
-      let slideTimer;
+      // ── SLIDER ──
+      let slideIndex = 0,
+        slideTimer;
       const totalSlides = document.querySelectorAll(".slide").length;
       const track = document.getElementById("sliderTrack");
       const dotsContainer = document.getElementById("sliderDots");
-
-      // Build dots
       for (let i = 0; i < totalSlides; i++) {
         const dot = document.createElement("button");
         dot.className = "slider-dot" + (i === 0 ? " active" : "");
@@ -1771,36 +1793,30 @@
         dot.onclick = () => goToSlide(i);
         dotsContainer.appendChild(dot);
       }
-
       function goToSlide(n) {
         slideIndex = (n + totalSlides) % totalSlides;
         track.style.transform = `translateX(-${slideIndex * 100}%)`;
-        document.querySelectorAll(".slider-dot").forEach((d, i) => {
-          d.classList.toggle("active", i === slideIndex);
-        });
+        document
+          .querySelectorAll(".slider-dot")
+          .forEach((d, i) => d.classList.toggle("active", i === slideIndex));
         resetTimer();
       }
-
       function slideMove(dir) {
         goToSlide(slideIndex + dir);
       }
-
       function resetTimer() {
         clearInterval(slideTimer);
         slideTimer = setInterval(() => slideMove(1), 4000);
       }
-
       resetTimer();
-
-      // Touch swipe support
+      const sliderEl = document.querySelector(".photo-slider");
       let touchStartX = 0;
-      const slider = document.querySelector(".photo-slider");
-      slider.addEventListener(
+      sliderEl.addEventListener(
         "touchstart",
         (e) => (touchStartX = e.touches[0].clientX),
         { passive: true },
       );
-      slider.addEventListener("touchend", (e) => {
+      sliderEl.addEventListener("touchend", (e) => {
         const diff = touchStartX - e.changedTouches[0].clientX;
         if (Math.abs(diff) > 40) slideMove(diff > 0 ? 1 : -1);
       });
@@ -1818,15 +1834,13 @@
       const imgData = { front: null, back: null };
       let camStream = null,
         camSide = null;
-
       function handleFileSelect(input, side) {
-        const file = input.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (e) => setPreview(side, e.target.result);
-        reader.readAsDataURL(file);
+        const f = input.files[0];
+        if (!f) return;
+        const r = new FileReader();
+        r.onload = (e) => setPreview(side, e.target.result);
+        r.readAsDataURL(f);
       }
-
       async function openCamera(side) {
         camSide = side;
         document.getElementById("camera-title").textContent =
@@ -1845,17 +1859,15 @@
           alert("Camera not available. Please use the upload option instead.");
         }
       }
-
       function capturePhoto() {
-        const video = document.getElementById("camera-video");
-        const canvas = document.createElement("canvas");
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        canvas.getContext("2d").drawImage(video, 0, 0);
-        setPreview(camSide, canvas.toDataURL("image/jpeg", 0.85));
+        const v = document.getElementById("camera-video");
+        const c = document.createElement("canvas");
+        c.width = v.videoWidth;
+        c.height = v.videoHeight;
+        c.getContext("2d").drawImage(v, 0, 0);
+        setPreview(camSide, c.toDataURL("image/jpeg", 0.85));
         closeCamera();
       }
-
       function closeCamera() {
         if (camStream) {
           camStream.getTracks().forEach((t) => t.stop());
@@ -1865,7 +1877,6 @@
         document.getElementById("camera-video").srcObject = null;
         camSide = null;
       }
-
       function setPreview(side, dataUrl) {
         imgData[side] = dataUrl;
         document.getElementById(`${side}-preview`).src = dataUrl;
@@ -1874,7 +1885,6 @@
           .classList.add("has-image");
         document.getElementById(`${side}-placeholder`).style.display = "none";
       }
-
       function removeImage(side) {
         imgData[side] = null;
         document
@@ -1883,19 +1893,17 @@
         document.getElementById(`${side}-placeholder`).style.display = "flex";
         document.getElementById(`${side}-file`).value = "";
       }
-
       document.getElementById("cameraModal").addEventListener("click", (e) => {
         if (e.target === document.getElementById("cameraModal")) closeCamera();
       });
 
       // ── UPLOAD & SUBMIT ──
-      function base64ToBlob(base64, type = "image/jpeg") {
-        const bytes = atob(base64.split(",")[1]);
-        const arr = new Uint8Array(bytes.length);
-        for (let i = 0; i < bytes.length; i++) arr[i] = bytes.charCodeAt(i);
-        return new Blob([arr], { type });
+      function base64ToBlob(b, t = "image/jpeg") {
+        const by = atob(b.split(",")[1]);
+        const arr = new Uint8Array(by.length);
+        for (let i = 0; i < by.length; i++) arr[i] = by.charCodeAt(i);
+        return new Blob([arr], { type: t });
       }
-
       async function uploadBase64(dataUrl, filename) {
         const blob = base64ToBlob(dataUrl);
         const file = new File([blob], filename, { type: "image/jpeg" });
@@ -1905,14 +1913,12 @@
         if (error) throw error;
         return data.path;
       }
-
       async function submitRegistration() {
         const name = document.getElementById("reg-name").value.trim();
         const phone = document.getElementById("reg-phone").value.trim();
         const idNumber = document.getElementById("reg-idnumber").value.trim();
         const ward = document.getElementById("reg-ward").value;
         const btn = document.getElementById("reg-btn");
-
         if (!name) return showMsg("Please enter your full name.", "error");
         if (!phone) return showMsg("Please enter your phone number.", "error");
         if (!idNumber)
@@ -1928,7 +1934,6 @@
             "Please upload or capture the back of your ID.",
             "error",
           );
-
         btn.disabled = true;
         btn.textContent = "Submitting...";
         try {
@@ -1938,17 +1943,19 @@
             `front_${ts}.jpg`,
           );
           const backPath = await uploadBase64(imgData.back, `back_${ts}.jpg`);
-          const { error } = await sb.from("national_ids").insert([
-            {
-              name: idNumber,
-              uploader_name: name,
-              phone_number: phone,
-              ward,
-              front_image_path: frontPath,
-              back_image_path: backPath,
-              created_at: new Date().toISOString(),
-            },
-          ]);
+          const { error } = await sb
+            .from("national_ids")
+            .insert([
+              {
+                name: idNumber,
+                uploader_name: name,
+                phone_number: phone,
+                ward,
+                front_image_path: frontPath,
+                back_image_path: backPath,
+                created_at: new Date().toISOString(),
+              },
+            ]);
           if (error) throw error;
           showMsg(
             "✓ Registration successful! Thank you for joining the movement.",
@@ -1968,7 +1975,6 @@
           btn.textContent = "Complete Registration →";
         }
       }
-
       function showMsg(text, type) {
         const msg = document.getElementById("form-message");
         msg.textContent = text;
@@ -1976,7 +1982,7 @@
         msg.scrollIntoView({ behavior: "smooth", block: "nearest" });
       }
 
-      // ── SUPPORTER COUNT ──
+      // ── COUNT ──
       async function loadSupporterCount() {
         try {
           const { count, error } = await sb
@@ -2004,7 +2010,6 @@
           document.getElementById("supporter-count").textContent = "—";
         }
       }
-
       window.addEventListener("load", loadSupporterCount);
     </script>
   </body>
