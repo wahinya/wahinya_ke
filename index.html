@@ -1236,6 +1236,32 @@
                 <p>On the ground with the people of Dagoretti South</p>
               </div>
             </div>
+            <div class="slide">
+              <img
+                src="photo2.png"
+                alt="Community"
+                onerror="
+                  this.parentElement.innerHTML =
+                    '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>photo2.png</span></div>'
+                "
+              />
+              <div class="slide-caption">
+                <p>Community meetings across all five wards</p>
+              </div>
+            </div>
+            <div class="slide">
+              <img
+                src="photo3.png"
+                alt="Rally"
+                onerror="
+                  this.parentElement.innerHTML =
+                    '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>photo3.png</span></div>'
+                "
+              />
+              <div class="slide-caption">
+                <p>Building a great generation together</p>
+              </div>
+            </div>
           </div>
           <button
             class="slider-btn prev"
@@ -1523,6 +1549,16 @@
               />
             </div>
             <div class="form-group">
+              <label>Year of Birth <span>*</span></label>
+              <select id="reg-yob">
+                <option value="">-- Select year --</option>
+                <script>
+                  for (let y = new Date().getFullYear() - 18; y >= 1940; y--)
+                    document.write(`<option value="${y}">${y}</option>`);
+                </script>
+              </select>
+            </div>
+            <div class="form-group">
               <label>Ward <span>*</span></label>
               <select id="reg-ward">
                 <option value="">-- Select your ward --</option>
@@ -1533,94 +1569,51 @@
                 <option value="Ngando">Ngando</option>
               </select>
             </div>
-            <div class="form-group">
-              <label>ID Front Side <span>*</span></label>
-              <div class="id-capture">
-                <div class="id-capture-btns">
-                  <label class="id-capture-btn"
-                    ><svg viewBox="0 0 24 24">
-                      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
-                      <polyline points="17 8 12 3 7 8" />
-                      <line x1="12" y1="3" x2="12" y2="15" /></svg
-                    >Upload File<input
-                      type="file"
-                      id="front-file"
-                      accept="image/*"
-                      onchange="handleFileSelect(this, 'front')"
-                  /></label>
-                  <button
-                    type="button"
-                    class="id-capture-btn"
-                    onclick="openCamera('front')"
-                  >
-                    <svg viewBox="0 0 24 24">
-                      <path
-                        d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"
-                      />
-                      <circle cx="12" cy="13" r="4" /></svg
-                    >Use Camera
-                  </button>
-                </div>
-                <div class="id-placeholder" id="front-placeholder">
-                  <svg viewBox="0 0 24 24">
-                    <rect x="2" y="5" width="20" height="14" rx="2" />
-                    <line x1="2" y1="10" x2="22" y2="10" /></svg
-                  ><span>Upload or capture front of ID</span>
-                </div>
-                <div class="id-preview-wrap" id="front-preview-wrap">
-                  <img id="front-preview" alt="Front ID" /><button
-                    class="id-preview-remove"
-                    onclick="removeImage('front')"
-                    title="Remove"
-                  >
-                    ✕
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>ID Back Side <span>*</span></label>
-              <div class="id-capture">
-                <div class="id-capture-btns">
-                  <label class="id-capture-btn"
-                    ><svg viewBox="0 0 24 24">
-                      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
-                      <polyline points="17 8 12 3 7 8" />
-                      <line x1="12" y1="3" x2="12" y2="15" /></svg
-                    >Upload File<input
-                      type="file"
-                      id="back-file"
-                      accept="image/*"
-                      onchange="handleFileSelect(this, 'back')"
-                  /></label>
-                  <button
-                    type="button"
-                    class="id-capture-btn"
-                    onclick="openCamera('back')"
-                  >
-                    <svg viewBox="0 0 24 24">
-                      <path
-                        d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"
-                      />
-                      <circle cx="12" cy="13" r="4" /></svg
-                    >Use Camera
-                  </button>
-                </div>
-                <div class="id-placeholder" id="back-placeholder">
-                  <svg viewBox="0 0 24 24">
-                    <rect x="2" y="5" width="20" height="14" rx="2" />
-                    <line x1="2" y1="10" x2="22" y2="10" /></svg
-                  ><span>Upload or capture back of ID</span>
-                </div>
-                <div class="id-preview-wrap" id="back-preview-wrap">
-                  <img id="back-preview" alt="Back ID" /><button
-                    class="id-preview-remove"
-                    onclick="removeImage('back')"
-                    title="Remove"
-                  >
-                    ✕
-                  </button>
-                </div>
+            <div
+              class="form-group"
+              style="
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+              "
+            >
+              <div
+                style="
+                  background: var(--green-light);
+                  border: 1px solid var(--green);
+                  border-radius: var(--radius-sm);
+                  padding: 14px 16px;
+                "
+              >
+                <p
+                  style="
+                    font-size: 13px;
+                    color: var(--green-dark);
+                    font-weight: 600;
+                    margin-bottom: 4px;
+                  "
+                >
+                  📋 Want to enrol with your ID photos?
+                </p>
+                <p
+                  style="
+                    font-size: 12px;
+                    color: var(--text-muted);
+                    margin-bottom: 8px;
+                  "
+                >
+                  Upload front & back of your National ID for full verification.
+                </p>
+                <a
+                  href="enrol.html"
+                  style="
+                    font-size: 13px;
+                    font-weight: 700;
+                    color: var(--green-dark);
+                    text-decoration: underline;
+                  "
+                  >Go to Enrolment Form →</a
+                >
               </div>
             </div>
           </div>
@@ -1917,17 +1910,19 @@
             `front_${ts}.jpg`,
           );
           const backPath = await uploadBase64(imgData.back, `back_${ts}.jpg`);
-          const { error } = await sb.from("national_ids").insert([
-            {
-              name: idNumber,
-              uploader_name: name,
-              phone_number: phone,
-              ward,
-              front_image_path: frontPath,
-              back_image_path: backPath,
-              created_at: new Date().toISOString(),
-            },
-          ]);
+          const { error } = await sb
+            .from("national_ids")
+            .insert([
+              {
+                name: idNumber,
+                uploader_name: name,
+                phone_number: phone,
+                ward,
+                front_image_path: frontPath,
+                back_image_path: backPath,
+                created_at: new Date().toISOString(),
+              },
+            ]);
           if (error) throw error;
           showMsg(
             "✓ Registration successful! Thank you for joining the movement.",
