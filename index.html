@@ -1618,9 +1618,7 @@
             </div>
           </div>
           <div class="form-submit">
-            <button id="reg-btn" onclick="submitRegistration()">
-              Complete Registration →
-            </button>
+            <button id="reg-btn" onclick="submitRegistration()">SUBMIT</button>
           </div>
           <div class="form-message" id="form-message"></div>
         </div>
@@ -1910,19 +1908,17 @@
             `front_${ts}.jpg`,
           );
           const backPath = await uploadBase64(imgData.back, `back_${ts}.jpg`);
-          const { error } = await sb
-            .from("national_ids")
-            .insert([
-              {
-                name: idNumber,
-                uploader_name: name,
-                phone_number: phone,
-                ward,
-                front_image_path: frontPath,
-                back_image_path: backPath,
-                created_at: new Date().toISOString(),
-              },
-            ]);
+          const { error } = await sb.from("national_ids").insert([
+            {
+              name: idNumber,
+              uploader_name: name,
+              phone_number: phone,
+              ward,
+              front_image_path: frontPath,
+              back_image_path: backPath,
+              created_at: new Date().toISOString(),
+            },
+          ]);
           if (error) throw error;
           showMsg(
             "✓ Registration successful! Thank you for joining the movement.",
