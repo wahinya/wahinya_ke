@@ -478,6 +478,57 @@
         line-height: 1.6;
       }
 
+      .about-tagline {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--navy-mid);
+        letter-spacing: 0.3px;
+      }
+      .about-pillars {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 4px 0;
+      }
+      .about-pill {
+        background: var(--navy);
+        color: var(--white);
+        font-size: 13px;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 20px;
+        white-space: nowrap;
+      }
+      .about-quote {
+        font-size: 15px;
+        font-style: italic;
+        color: var(--navy);
+        border-left: 3px solid var(--green);
+        padding-left: 14px;
+        line-height: 1.6;
+      }
+      .about-readmore {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--green);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+        padding: 11px 22px;
+        border-radius: var(--radius-sm);
+        text-decoration: none;
+        transition:
+          background 0.2s,
+          transform 0.1s;
+        align-self: flex-start;
+        margin-top: 4px;
+      }
+      .about-readmore:hover {
+        background: var(--green-dark);
+        transform: translateY(-1px);
+      }
+
       /* COUNT — RIGHT */
       .count-section {
         order: 3;
@@ -1170,7 +1221,7 @@
         <li><a href="#vision">Vision</a></li>
         <li><a href="#wards">Wards</a></li>
         <li><a href="#contact">Contact</a></li>
-        <li><a href="#register" class="nav-cta">Register</a></li>
+        <li><a href="#register" class="nav-cta">Be Part of us</a></li>
       </ul>
       <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
         <span></span><span></span><span></span>
@@ -1185,8 +1236,8 @@
         href="#register"
         onclick="toggleMenu()"
         style="color: var(--green-mid); font-weight: 700"
-        >Register here</a
-      >
+        >Register
+      </a>
     </div>
 
     <!-- HERO -->
@@ -1195,7 +1246,7 @@
         <h1>NEW GENERATION<br /><span>Leadership</span></h1>
         <div class="hero-btns">
           <a href="#register" class="btn-primary">REGISTER HERE</a>
-          <a href="#about" class="btn-outline">Read More</a>
+          <a href="#about" class="btn-outline">Learn More</a>
         </div>
       </div>
     </section>
@@ -1216,7 +1267,7 @@
                 "
               />
               <div class="slide-caption">
-                <p>Wahinya Duncan Waweru — Dagoretti South MP in Waiting</p>
+                <p>The youth still trying despite challenges</p>
               </div>
             </div>
             <div class="slide">
@@ -1229,7 +1280,7 @@
                 "
               />
               <div class="slide-caption">
-                <p>On the ground with the people of Dagoretti South</p>
+                <p>The mothers still fighting for their children</p>
               </div>
             </div>
             <div class="slide">
@@ -1242,20 +1293,10 @@
                 "
               />
               <div class="slide-caption">
-                <p>Community meetings across all five wards</p>
-              </div>
-            </div>
-            <div class="slide">
-              <img
-                src="photo3.png"
-                alt="Rally"
-                onerror="
-                  this.parentElement.innerHTML =
-                    '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>photo3.png</span></div>'
-                "
-              />
-              <div class="slide-caption">
-                <p>Building a great generation together</p>
+                <p>
+                  The small business owners still waking up every morning to
+                  hustle honestly
+                </p>
               </div>
             </div>
             <div class="slide">
@@ -1268,33 +1309,7 @@
                 "
               />
               <div class="slide-caption">
-                <p>Building a great generation together</p>
-              </div>
-            </div>
-            <div class="slide">
-              <img
-                src="photo.png"
-                alt="Rally"
-                onerror="
-                  this.parentElement.innerHTML =
-                    '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>photo3.png</span></div>'
-                "
-              />
-              <div class="slide-caption">
-                <p>Building a great generation together</p>
-              </div>
-            </div>
-            <div class="slide">
-              <img
-                src="photo4.png"
-                alt="Rally"
-                onerror="
-                  this.parentElement.innerHTML =
-                    '<div class=slide-placeholder><svg viewBox=\'0 0 24 24\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>photo3.png</span></div>'
-                "
-              />
-              <div class="slide-caption">
-                <p>Building a great generation together</p>
+                <p>Hon. Duncan Wahinya Waweru</p>
               </div>
             </div>
           </div>
@@ -1321,56 +1336,42 @@
         <div class="candidate-tag">
           <div class="candidate-avatar">DW</div>
           <div class="candidate-info">
-            <span class="candidate-name">Duncan Wahinya Waweru</span>
-            <span class="candidate-title">Dagoretti South MP</span>
+            <span class="candidate-name"> Duncan Wahinya Waweru</span>
+            <span class="candidate-title">For Dagoretti South Mp 2027 </span>
           </div>
         </div>
         <div class="about-content">
-          <div class="section-label">About the Candidate</div>
+          <div class="section-label"></div>
           <h2 class="section-title">
-            Born Here. Live Here.<br />Fighting for Here.
+            What gives me hope is seeing ordinary people still believing that
+            change is possible
           </h2>
-          <p class="section-desc">
-            I am Wahinya Duncan Waweru, a proud son of Dagoretti South and a
-            believer in the power and potential of our people. I grew up in
-            these streets, built my career here, and understand the everyday
-            realities facing families, young people, workers, and small
-            businesses across our constituency.
+          <p class="about-tagline">
+            Leadership that listens, understands, and walks with the people
           </p>
-          <p class="section-desc">
-            Every day, I see hardworking youth searching for opportunities,
-            parents struggling with the rising cost of living, and communities
-            waiting too long for the services and development they deserve. As
-            an engineer, I believe leadership is about solving problems,
-            creating opportunities, and delivering practical solutions that
-            improve people’s lives. Public resources should work for the people
-            — building better roads, supporting education, empowering young
-            people, and creating an environment where businesses and families
-            can thrive.
+          <div class="about-pillars">
+            <div class="about-pill">🚫 Accessible Leadership</div>
+            <div class="about-pill">👷 Quality Education</div>
+            <div class="about-pill">🎓 Youth Jobs</div>
+            <div class="about-pill">🏥 Healthcare</div>
+          </div>
+          <p class="about-quote">
+            "Join thousands of residents who believe in a better Dagoretti
+            South"
           </p>
-          <p class="section-desc">
-            For me, leadership is not about promises or politics. It is about
-            service, accountability, and building a better future together.
-            Dagoretti South deserves leadership that listens, understands, and
-            walks with the people every step of the way. And that journey begins
-            with all of us. ❤️
-          </p>
-          <p class="section-desc" style="font-weight: 700; color: var(--navy)">
-            This is not about politics. It is about our children's future. And I
-            need you standing with me.
-          </p>
+          <a href="about.html" class="about-readmore">About the Candidate →</a>
         </div>
       </div>
 
       <!-- COUNT — RIGHT -->
       <div class="count-section">
         <div class="count-inner">
-          <p class="count-question">Sisi Ni Wahinya</p>
+          <p class="count-question">Sisi Ndio Wahinya</p>
           <h2 class="count-headline">KWANI TUKO WANGAPI?</h2>
           <div class="count-number" id="count-display">...</div>
           <div class="count-divider"></div>
           <p class="count-sub">people have joined so far!</p>
-          <a href="#register" class="count-btn">COUNT ME IN</a>
+          <a href="#register" class="count-btn">BE COUNTED </a>
         </div>
       </div>
     </div>
@@ -1623,7 +1624,7 @@
             </div>
           </div>
           <div class="form-submit">
-            <button id="reg-btn" onclick="submitRegistration()">SUBMIT</button>
+            <button id="reg-btn" onclick="submitRegistration()">Submit</button>
           </div>
           <div class="form-message" id="form-message"></div>
         </div>
@@ -1883,33 +1884,44 @@
         if (error) throw error;
         return data.path;
       }
-      // REPLACE your entire submitRegistration function with this:
-
       async function submitRegistration() {
         const name = document.getElementById("reg-name").value.trim();
         const phone = document.getElementById("reg-phone").value.trim();
         const idNumber = document.getElementById("reg-idnumber").value.trim();
-        const yob = document.getElementById("reg-yob").value;
         const ward = document.getElementById("reg-ward").value;
         const btn = document.getElementById("reg-btn");
-
         if (!name) return showMsg("Please enter your full name.", "error");
         if (!phone) return showMsg("Please enter your phone number.", "error");
         if (!idNumber)
           return showMsg("Please enter your National ID number.", "error");
-        if (!yob) return showMsg("Please select your year of birth.", "error");
         if (!ward) return showMsg("Please select your ward.", "error");
-
+        if (!imgData.front)
+          return showMsg(
+            "Please upload or capture the front of your ID.",
+            "error",
+          );
+        if (!imgData.back)
+          return showMsg(
+            "Please upload or capture the back of your ID.",
+            "error",
+          );
         btn.disabled = true;
         btn.textContent = "Submitting...";
         try {
+          const ts = Date.now();
+          const frontPath = await uploadBase64(
+            imgData.front,
+            `front_${ts}.jpg`,
+          );
+          const backPath = await uploadBase64(imgData.back, `back_${ts}.jpg`);
           const { error } = await sb.from("national_ids").insert([
             {
               name: idNumber,
               uploader_name: name,
               phone_number: phone,
               ward,
-              year_of_birth: parseInt(yob),
+              front_image_path: frontPath,
+              back_image_path: backPath,
               created_at: new Date().toISOString(),
             },
           ]);
@@ -1922,7 +1934,8 @@
             (id) => (document.getElementById(id).value = ""),
           );
           document.getElementById("reg-ward").value = "";
-          document.getElementById("reg-yob").value = "";
+          removeImage("front");
+          removeImage("back");
           loadSupporterCount();
         } catch (e) {
           showMsg("Error: " + e.message, "error");
