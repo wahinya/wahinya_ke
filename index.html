@@ -1876,44 +1876,33 @@
         if (error) throw error;
         return data.path;
       }
+      // REPLACE your entire submitRegistration function with this:
+
       async function submitRegistration() {
         const name = document.getElementById("reg-name").value.trim();
         const phone = document.getElementById("reg-phone").value.trim();
         const idNumber = document.getElementById("reg-idnumber").value.trim();
+        const yob = document.getElementById("reg-yob").value;
         const ward = document.getElementById("reg-ward").value;
         const btn = document.getElementById("reg-btn");
+
         if (!name) return showMsg("Please enter your full name.", "error");
         if (!phone) return showMsg("Please enter your phone number.", "error");
         if (!idNumber)
           return showMsg("Please enter your National ID number.", "error");
+        if (!yob) return showMsg("Please select your year of birth.", "error");
         if (!ward) return showMsg("Please select your ward.", "error");
-        if (!imgData.front)
-          return showMsg(
-            "Please upload or capture the front of your ID.",
-            "error",
-          );
-        if (!imgData.back)
-          return showMsg(
-            "Please upload or capture the back of your ID.",
-            "error",
-          );
+
         btn.disabled = true;
         btn.textContent = "Submitting...";
         try {
-          const ts = Date.now();
-          const frontPath = await uploadBase64(
-            imgData.front,
-            `front_${ts}.jpg`,
-          );
-          const backPath = await uploadBase64(imgData.back, `back_${ts}.jpg`);
           const { error } = await sb.from("national_ids").insert([
             {
               name: idNumber,
               uploader_name: name,
               phone_number: phone,
               ward,
-              front_image_path: frontPath,
-              back_image_path: backPath,
+              year_of_birth: parseInt(yob),
               created_at: new Date().toISOString(),
             },
           ]);
@@ -1926,8 +1915,7 @@
             (id) => (document.getElementById(id).value = ""),
           );
           document.getElementById("reg-ward").value = "";
-          removeImage("front");
-          removeImage("back");
+          document.getElementById("reg-yob").value = "";
           loadSupporterCount();
         } catch (e) {
           showMsg("Error: " + e.message, "error");
